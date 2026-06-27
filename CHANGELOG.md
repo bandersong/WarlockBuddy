@@ -1,6 +1,12 @@
 # Changelog
 
 ## Unreleased (dev)
+- **In-game test checklist** (`docs/TESTING.md`): a plain-language, no-coding
+  checklist a non-expert can follow on a real warlock to verify the things offline
+  tests can't (in-combat Healthstone click, summon-on-party-member, group soulstone
+  announce, live DoT timers, proc flash/sound, taint watch, frame/option
+  persistence), plus how to report problems via `/wb status`. This is the last gate
+  before calling it 1.0.
 - **Headless test harness** (`tests/headless.lua`): stubs the WoW API and actually
   runs the addon offline. Two stages:
   - *Smoke* — loads every file in `.toc` order, runs every module's `OnInit`, and

@@ -31,6 +31,23 @@ IN-GAME TEST PASS, not more features** — and that can't be done from this mach
 
 ## Log
 
+### 2026-06-27 — in-game test checklist (docs/TESTING.md)
+- Wrote the human in-game checklist (codex's long-queued "B"). Logic is now
+  offline-tested; this covers what only a real 2.5.x client can show: secure
+  Healthstone click IN COMBAT (no "action blocked"), summon-on-party-member without
+  losing target, group soulstone announce, live DoT timer sync + expiry pulse, proc
+  flash/sound, minimap drag, frame/option persistence across reload+relog, and a
+  whole-session taint watch. Non-expert friendly (no coding), with a "/wb status +
+  copy red errors" report path.
+- **Triangulation:** GLM-5.2 + Codex both confirmed it's the right next artifact
+  and produced near-identical high-risk check lists; every codex item maps to a
+  section. Added codex's nuance: run `/wb status` AFTER a fight too (catches
+  deferred secure setup). Linked from README.
+- **This is the last gate before 1.0.** The loop has done all it can offline:
+  feature-complete, twice-audited, release-packaged, offline-tested (smoke + 8
+  behavior asserts), and now with a clear in-game acceptance checklist. Real 1.0
+  needs a human to run that checklist on a warlock.
+
 ### 2026-06-27 — behavior assertions in the test harness (dev)
 - Upgraded the smoke harness from "doesn't crash" to "logic is correct" — codex
   had flagged smoke as weak at catching real bugs. Added a per-test MockState the

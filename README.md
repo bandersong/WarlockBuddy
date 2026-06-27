@@ -68,8 +68,12 @@ lua tests/headless.lua                                  # load/init smoke test
 
 `tests/headless.lua` stubs the WoW API, loads every file in `.toc` order, fires
 `ADDON_LOADED`/`PLAYER_LOGIN` (running every module's `OnInit`), and exercises the
-events and slash commands — catching runtime errors that a syntax check can't.
-Exit 0 = clean. (Dev-only; excluded from release zips via `.gitattributes`.)
+events, slash commands, and 8 behavior assertions — catching runtime + logic
+errors that a syntax check can't. Exit 0 = clean. (Dev-only; excluded from release
+zips via `.gitattributes`.)
+
+For things only a real client can verify (secure buttons in combat, taint, proc
+visuals), follow the in-game checklist in [docs/TESTING.md](docs/TESTING.md).
 
 ## License
 
