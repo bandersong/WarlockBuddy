@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.8 — automated, cleaner releases
+- **Release automation**: pushing a tag (`v*`) now auto-builds the clean
+  `WarlockBuddy/` zip and publishes the GitHub Release — releasing is just
+  `git tag … && git push --tags`. (This release was built by that workflow.)
+- **Cleaner release zips**: `.gitattributes` now also excludes `.github/` and
+  `docs/` (not just `tests/`), so the downloadable addon contains only what a
+  player needs (the addon + README/LICENSE/INSTALL/CHANGELOG).
+- First release that's CI-gated on Lua 5.1. No addon behavior change vs 0.9.7.
+
 ## Unreleased (dev)
 - **CI** (`.github/workflows/ci.yml`): every push/PR runs `luac -p` on all Lua +
   `lua tests/headless.lua`, on **Lua 5.1** (the version WoW uses) so the checks

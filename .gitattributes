@@ -1,4 +1,7 @@
-# Keep release archives (git archive / packagers) free of dev-only files.
-tests/        export-ignore
-.gitignore    export-ignore
+# Keep release archives (git archive / the release workflow) free of dev-only
+# files. The playable addon zip should contain only the addon + user-facing docs.
+tests/         export-ignore
+docs/          export-ignore
+.github/       export-ignore
+.gitignore     export-ignore
 .gitattributes export-ignore

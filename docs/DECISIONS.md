@@ -31,6 +31,23 @@ IN-GAME TEST PASS, not more features** — and that can't be done from this mach
 
 ## Log
 
+### 2026-06-27 — v0.9.8: automated releases + cleaner zips
+- Added `.github/workflows/release.yml`: a `v*` tag push auto-builds the clean
+  zip (git archive --prefix=WarlockBuddy/) and publishes the Release. Fits his
+  set-and-forget preference — future releases are just a tag.
+- **Red-team catch:** `.gitattributes` only export-ignored `tests/`, so release
+  zips would have leaked `.github/` and `docs/`. Added both (+ kept README/LICENSE/
+  INSTALL/CHANGELOG in the zip).
+- **Triangulation:** GLM-5.2 + Codex agreed on the workflow (export-ignore honored
+  by git archive, `permissions: contents: write`, softprops/action-gh-release@v2).
+  They split on `fetch-depth`: GLM said 0 is mandatory (archiving the tag); Codex
+  said unneeded if archiving `github.sha`. Used `fetch-depth: 0` + archive the tag
+  ref — robust, covers both. Verified by an actual tagged run (like CI before it).
+- **Honest note:** this is the last substantive offline automation. The addon is
+  feature-complete, audited, tested, CI-gated, and now auto-releasing. Remaining
+  work is the human in-game pass (docs/TESTING.md). Further loop runs are churn —
+  recommend converting the cron loop to on-demand.
+
 ### 2026-06-27 — CI on Lua 5.1 (dev)
 - Capstone on the test work: GitHub Actions runs `luac -p` (all .lua) +
   `lua tests/headless.lua` on every push/PR, so the suite I built actually guards

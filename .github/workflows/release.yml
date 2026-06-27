@@ -1,0 +1,32 @@
+name: Release
+
+# Push a tag like v0.9.8 and this builds a clean WarlockBuddy/ zip and publishes
+# it as a GitHub Release automatically - so cutting a release is just:
+#   git tag v0.9.8 && git push origin v0.9.8
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write   # required to create the release + upload the asset
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history/tags so git archive can resolve the tag
+
+      # git archive honors .gitattributes export-ignore, so tests/, docs/, .github/
+      # and git dotfiles are stripped. --prefix makes the top folder WarlockBuddy/.
+      - name: Build clean release zip
+        run: git archive --format=zip --prefix=WarlockBuddy/ -o WarlockBuddy-${{ github.ref_name }}.zip ${{ github.ref_name }}
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: WarlockBuddy-${{ github.ref_name }}.zip
+          generate_release_notes: true

@@ -2,7 +2,7 @@
 ## Title: |cff9482c9WarlockBuddy|r
 ## Notes: Everything a TBC Classic warlock needs - shards, DoT timers, procs, pet, CC, soulstone & reminders.
 ## Author: bandersong
-## Version: 0.9.7
+## Version: 0.9.8
 ## SavedVariables: WarlockBuddyDB
 ## DefaultState: enabled
 ## IconTexture: Interface\Icons\Spell_Shadow_DeathCoil
