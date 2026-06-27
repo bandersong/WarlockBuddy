@@ -1,6 +1,10 @@
 # Changelog
 
 ## Unreleased (dev)
+- **CI** (`.github/workflows/ci.yml`): every push/PR runs `luac -p` on all Lua +
+  `lua tests/headless.lua`, on **Lua 5.1** (the version WoW uses) so the checks
+  match the real target, not a newer local Lua. Regressions now fail the build
+  automatically. README shows the CI badge.
 - **In-game test checklist** (`docs/TESTING.md`): a plain-language, no-coding
   checklist a non-expert can follow on a real warlock to verify the things offline
   tests can't (in-combat Healthstone click, summon-on-party-member, group soulstone

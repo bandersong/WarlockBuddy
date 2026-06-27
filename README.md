@@ -6,6 +6,7 @@ Built to cover every warlock spec — Affliction, Demonology, Destruction — ou
 
 ![spec: all](https://img.shields.io/badge/spec-Affliction%20%7C%20Demo%20%7C%20Destro-9482c9)
 ![client](https://img.shields.io/badge/client-TBC%20Classic%202.5.x-blue)
+[![CI](https://github.com/bandersong/WarlockBuddy/actions/workflows/ci.yml/badge.svg)](https://github.com/bandersong/WarlockBuddy/actions/workflows/ci.yml)
 
 ---
 
@@ -71,6 +72,9 @@ lua tests/headless.lua                                  # load/init smoke test
 events, slash commands, and 8 behavior assertions — catching runtime + logic
 errors that a syntax check can't. Exit 0 = clean. (Dev-only; excluded from release
 zips via `.gitattributes`.)
+
+Both checks also run in **GitHub Actions on every push/PR** (`.github/workflows/ci.yml`)
+against **Lua 5.1** — the version WoW uses — so a regression can't slip in unnoticed.
 
 For things only a real client can verify (secure buttons in combat, taint, proc
 visuals), follow the in-game checklist in [docs/TESTING.md](docs/TESTING.md).

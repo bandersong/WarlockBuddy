@@ -31,6 +31,21 @@ IN-GAME TEST PASS, not more features** — and that can't be done from this mach
 
 ## Log
 
+### 2026-06-27 — CI on Lua 5.1 (dev)
+- Capstone on the test work: GitHub Actions runs `luac -p` (all .lua) +
+  `lua tests/headless.lua` on every push/PR, so the suite I built actually guards
+  every future change instead of relying on me to run it.
+- **Triangulation:** GLM-5.2 + Codex both ranked CI the highest-value next step
+  (high confidence) over a niche feature, and both stressed the key point: **run CI
+  on Lua 5.1, not a newer Lua** — WoW uses 5.1, and a newer local Lua can accept
+  things that break in-game (math.atan2 removed after 5.2, table.unpack vs unpack,
+  goto/integer ops in 5.3+). So CI is now a *better* check than my local 5.5.
+  - Install method split: GLM = `leafo/gh-actions-lua` (pins version, ships luac);
+    Codex = apt `lua5.1`. Chose leafo — provides `lua`+`luac` unversioned and
+    sidesteps Codex's own doubt about whether apt's lua5.1 ships luac5.1.
+- Pre-checked the code for 5.1 incompatibilities (no `//`/`goto`/`<const>`;
+  `unpack` and `math.atan2` are 5.1-native) so the first CI run should be green.
+
 ### 2026-06-27 — in-game test checklist (docs/TESTING.md)
 - Wrote the human in-game checklist (codex's long-queued "B"). Logic is now
   offline-tested; this covers what only a real 2.5.x client can show: secure

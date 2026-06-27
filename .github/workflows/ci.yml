@@ -1,0 +1,25 @@
+name: CI
+
+# Runs on every push and PR. Uses Lua 5.1 on purpose: WoW (TBC Classic 2.5.x)
+# runs a 5.1-based interpreter, so checking against 5.1 catches things that a
+# newer local Lua would silently accept (e.g. math.atan2 removed after 5.2,
+# table.unpack vs the global unpack, goto/integer-division in 5.3+).
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Lua 5.1 (matches WoW)
+        uses: leafo/gh-actions-lua@v11
+        with:
+          luaVersion: "5.1.5"
+
+      - name: Syntax-check every .lua (luac -p)
+        run: find . -name '*.lua' -not -path './.git/*' -print0 | xargs -0 -n1 luac -p
+
+      - name: Headless smoke + behavior tests
+        run: lua tests/headless.lua
