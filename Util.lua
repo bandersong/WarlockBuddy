@@ -113,6 +113,23 @@ function ns:SetMoversLocked(locked)
     end
 end
 
+-- Restore every frame to its pristine default position. Mover names map to
+-- saved-var keys by lowercasing ("DoTs" -> "dots", "PetCD" -> "petcd", etc.),
+-- and ns.defaults still holds the untouched defaults, so we copy default -> db
+-- and re-anchor the live frame.
+function ns:ResetPositions()
+    for name, mv in pairs(ns.movers) do
+        local key = name:lower()
+        local def = ns.defaults[key] and ns.defaults[key].point
+        local live = ns.db[key] and ns.db[key].point
+        if def and live then
+            live[1], live[2], live[3] = def[1], def[2], def[3]
+            mv:ClearAllPoints()
+            mv:SetPoint(live[1], UIParent, live[1], live[2] or 0, live[3] or 0)
+        end
+    end
+end
+
 -- ---------------------------------------------------------------------------
 -- Status bar factory (icon + name + time-left bar) for DoT/CC trackers.
 -- ---------------------------------------------------------------------------

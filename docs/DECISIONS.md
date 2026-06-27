@@ -7,7 +7,12 @@ here so the next run has continuity.
 ## Next pick (queued)
 
 Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run):
-- **Drain channel helper** (Codex #2) — tick/clip timer for Drain Life/Drain Soul.
+- **Minimap button for discoverability** (both reviewers' #2) — a non-expert won't
+  remember `/wb`; a visible minimap/LDB button to open options is the clear next
+  usability win.
+- **First-run "Beginner" preset** (Codex #3) — start with fewer modules on + plain
+  tooltips to cut overwhelm.
+- **Drain channel helper** (Codex #2 earlier) — tick/clip timer for Drain Life/Soul.
 - **Soulstone announce: match by spell id, not name** — codex (0.92) says use the
   rank ids {20707,20762,20763,20764,20765,27239} instead of the localized name in
   the CLEU match (name only as fallback). Small robustness fix; tracker itself is
@@ -20,6 +25,18 @@ Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run)
   mirroring the Healthstone module.
 
 ## Log
+
+### 2026-06-27 — v0.8.0: clean default layout + /wb resetpos
+- **Triangulation: rare strong agreement.** With 12 modules now, I flagged frame
+  clutter as the real risk for a non-expert and asked both to rank feature vs
+  usability. Both independently put "sane non-overlapping default layout + resetpos"
+  #1 (GLM 9.5/10, Codex 95%) and "minimap button" #2. Combat optimizations (drain
+  helper) and the soulstone id hardening were explicitly deprioritized for a new
+  player. Built #1.
+- **Shipped:** spread default positions for all 12 frames; `ns:ResetPositions()`
+  (maps mover name->saved-var key by lowercasing, copies pristine ns.defaults ->
+  db, re-anchors live); `/wb resetpos` + a "Reset frame positions" button in the
+  options panel. Minimap button is now the queued #1.
 
 ### 2026-06-27 — v0.7.0: Ritual of Summoning helper
 - **Triangulation:** strong consensus. Both confirmed spellID 698, 1-shard cost,

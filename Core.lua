@@ -51,41 +51,46 @@ ns.defaults = {
         LifeTap = true,
         Summon = true,
     },
+    -- Default frame positions form a deliberately SPREAD, non-overlapping layout
+    -- so a first-time user sees a clean screen, not a pile of boxes. `/wb resetpos`
+    -- restores exactly these. Rough map: left column = shards/petcd/pet,
+    -- right column = soulstone/dots/summon, center column = procs/cc (top) and
+    -- execute/reminders/lifetap (bottom), healthstone near the action bars.
     shards = {
         warnLow = 3,           -- turn red at/below this
         warnHigh = 28,         -- turn orange near a full bag (32 slots)
         scale = 1.0,
-        point = { "CENTER", -220, 120 },
+        point = { "CENTER", -260, 220 },     -- top-left
     },
     dots = {
         scale = 1.0,
         max = 8,
-        point = { "CENTER", 260, 60 },
+        point = { "CENTER", 280, 40 },       -- right
         showCurses = true,
     },
     procs = {
         flash = true,
         sound = true,
-        point = { "CENTER", 0, 160 },
+        point = { "CENTER", 0, 230 },        -- top-center alert
     },
     pet = {
-        point = { "CENTER", -260, -160 },
+        point = { "CENTER", -280, -180 },    -- bottom-left
         scale = 1.0,
         darkPactWarn = 0.30,   -- warn when pet mana below this fraction
     },
     soulstone = {
         announce = true,       -- chat announce when you SS someone
         channel = "SAY",
-        point = { "CENTER", 220, -160 },
+        point = { "CENTER", 260, 220 },      -- top-right
     },
     reminders = {
         armor = true,          -- nag if no Fel/Demon armor
         weaponStone = true,    -- nag if no Spell/Firestone enchant
         soulLink = false,      -- nag if Soul Link talented but inactive (off by default)
-        point = { "CENTER", 0, -200 },
+        point = { "CENTER", 0, -110 },       -- center-low
     },
     cc = {
-        point = { "CENTER", 0, 240 },
+        point = { "CENTER", 0, 150 },        -- under procs
         scale = 1.0,
     },
     execute = {
@@ -93,26 +98,26 @@ ns.defaults = {
         flash = true,
         sound = true,
         scale = 1.0,
-        point = { "CENTER", 0, -120 },
+        point = { "CENTER", 0, -40 },        -- center alert
     },
     petcd = {
         scale = 1.0,
-        point = { "CENTER", -260, -220 },
+        point = { "CENTER", -280, 60 },      -- left
     },
     healthstone = {
         scale = 1.0,
-        point = { "CENTER", 120, -260 },
+        point = { "CENTER", 150, -210 },     -- near action bars
     },
     lifetap = {
         manaBelow = 0.30,      -- cue appears when mana fraction drops below this
         safeHpAbove = 0.40,    -- green only while health fraction is above this
         scale = 1.0,
-        point = { "CENTER", 0, -150 },
+        point = { "CENTER", 0, -165 },       -- center, below reminders
     },
     summon = {
         announce = true,       -- chat "Summoning X - click the portal!" on cast
         scale = 1.0,
-        point = { "CENTER", 300, 120 },
+        point = { "CENTER", 280, -120 },     -- right-lower
     },
 }
 
@@ -188,7 +193,7 @@ function ns:Init()
         end
     end
 
-    ns:Print("loaded. |cffcc99ff/wb|r for options. drag with |cffcc99ff/wb unlock|r.")
+    ns:Print("loaded. |cffcc99ff/wb|r options, |cffcc99ff/wb unlock|r to drag, |cffcc99ff/wb resetpos|r to restore layout.")
 end
 
 -- ---------------------------------------------------------------------------
@@ -224,6 +229,9 @@ local function SlashCmdHandler(msg)
         else
             ns:Print("movers |cffff5555LOCKED|r.")
         end
+    elseif msg == "resetpos" then
+        ns:ResetPositions()
+        ns:Print("frame positions restored to the default layout.")
     elseif msg == "reset" then
         WarlockBuddyDB = {}
         ns:Print("settings reset. /reload to apply.")

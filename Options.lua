@@ -71,6 +71,14 @@ function ns:BuildOptions()
         function(v) ns.db.locked = v and true or false; ns:SetMoversLocked(ns.db.locked) end)
     y = y - 30
 
+    -- Reset-positions button (so a non-expert isn't stuck if frames drift)
+    local resetBtn = CreateFrame("Button", nil, panel, "UIPanelButtonTemplate")
+    resetBtn:SetSize(180, 22)
+    resetBtn:SetPoint("TOPLEFT", 16, y)
+    resetBtn:SetText("Reset frame positions")
+    resetBtn:SetScript("OnClick", function() ns:ResetPositions() end)
+    y = y - 32
+
     -- Module toggles
     local modHeader = panel:CreateFontString(nil, "ARTWORK", "GameFontNormal")
     modHeader:SetPoint("TOPLEFT", 16, y)

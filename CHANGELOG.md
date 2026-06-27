@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.8.0 — clean default layout + reset positions
+- **Sane default layout.** The 12 frames now spread across the screen (left column
+  shards/pet CDs/pet, right column soulstone/DoTs/summon, center alerts stacked,
+  Healthstone near the action bars) instead of piling up near the middle on first
+  load. First impression is a clean, readable screen, not a heap of boxes.
+- **`/wb resetpos`** restores every frame to that default layout, and there's a
+  **"Reset frame positions" button** in the options panel for anyone who doesn't
+  know the slash command (or who dragged a frame off-screen).
+
 ## 0.7.0 — Ritual of Summoning helper
 - **New module: Summon** — a clickable button per group member; click a name to
   start summoning that person (without changing your current target), and it
