@@ -31,6 +31,22 @@ IN-GAME TEST PASS, not more features** — and that can't be done from this mach
 
 ## Log
 
+### 2026-06-27 — behavior assertions in the test harness (dev)
+- Upgraded the smoke harness from "doesn't crash" to "logic is correct" — codex
+  had flagged smoke as weak at catching real bugs. Added a per-test MockState the
+  stubs read from (reset between tests, no leakage) and 8 behavior assertions.
+- **Triangulation:** GLM-5.2 + Codex both ranked this A > B(TESTING.md) > C(feature)
+  and named the SAME 5 behaviors to assert; both flagged the key risk = positional
+  WoW API return shapes (UnitDebuff, CombatLogGetCurrentEventInfo) — a wrong shape
+  makes tests pass against fiction. I pinned the CLEU mock to the verified 2.5
+  layout (spellId 12th) that Soulstone.lua actually reads, and matched UnitDebuff's
+  return order. Both warned "don't overbuild a fake WoW" — kept the mock minimal.
+- **Result: PASS (8/8).** Now verified offline (not just assumed): shard count
+  mapping; DoT tracker includes player-cast + EXCLUDES another player's dot (the
+  mineOnly filter); execute threshold boundary; Life Tap green/warn; soulstone
+  announce via spell-id match. No bugs found, but these were previously unproven.
+- A human TESTING.md (codex's B) remains queued for true in-game behavior.
+
 ### 2026-06-27 — headless smoke-test harness (dev)
 - The addon's one real remaining risk is "never run in-game." Rather than churn
   features, built the closest offline substitute: `tests/headless.lua` stubs the
