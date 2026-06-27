@@ -30,6 +30,20 @@ local function attachDrag(btn, mover)
 end
 
 function M:OnInit()
+    -- Secure-button setup is forbidden in combat; defer if a /reload landed us in
+    -- combat (normally OnInit runs at login, out of combat).
+    if InCombatLockdown() then
+        local waiter = CreateFrame("Frame")
+        waiter:RegisterEvent("PLAYER_REGEN_ENABLED")
+        waiter:SetScript("OnEvent", function(self)
+            self:UnregisterAllEvents(); self:SetScript("OnEvent", nil); M:Build()
+        end)
+        return
+    end
+    self:Build()
+end
+
+function M:Build()
     local cfg = ns.db.summon
     self.ritualName = GetSpellInfo(ns.spellID.RitualOfSummoning)
 
@@ -129,7 +143,15 @@ end
 
 function M:UNIT_SPELLCAST_SUCCEEDED(unit, _, spellID)
     if unit ~= "player" then return end
-    if spellID ~= ns.spellID.RitualOfSummoning then return end
+    -- Match by id OR resolved name. Different client builds have passed the 3rd
+    -- arg as the spellID vs a spell-line id; matching the name too makes the
+    -- announce robust to that, and a non-spell value (e.g. a castGUID string)
+    -- resolves to nil so it can't false-positive.
+    local matches = (spellID == ns.spellID.RitualOfSummoning)
+    if not matches and spellID then
+        matches = (GetSpellInfo(spellID) == self.ritualName)
+    end
+    if not matches then return end
     if self.pending and ns.db.summon.announce and IsInGroup() then
         local chan = IsInRaid() and "RAID" or "PARTY"
         SendChatMessage("Summoning " .. self.pending .. " - click the portal!", chan)

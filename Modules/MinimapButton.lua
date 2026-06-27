@@ -24,6 +24,7 @@ end
 
 local function onDragUpdate(self)
     local mx, my = Minimap:GetCenter()
+    if not mx or not my then return end   -- minimap hidden/replaced: bail safely
     local scale = UIParent:GetEffectiveScale()
     local cx, cy = GetCursorPosition()
     cx, cy = cx / scale, cy / scale
@@ -55,6 +56,10 @@ function M:OnInit()
 
     btn:SetScript("OnClick", function(_, mouseBtn)
         if mouseBtn == "RightButton" then
+            if InCombatLockdown() then
+                ns:Print("|cffff5555can't lock/unlock in combat|r")
+                return
+            end
             ns.db.locked = not ns.db.locked
             ns:SetMoversLocked(ns.db.locked)
             ns:Print("movers " .. (ns.db.locked and "|cffff5555LOCKED|r" or "|cff55ff55UNLOCKED|r"))

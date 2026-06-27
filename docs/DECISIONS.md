@@ -23,6 +23,25 @@ Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run)
 
 ## Log
 
+### 2026-06-27 — v0.9.1: secure/options hardening (re-audit #2)
+- Audited everything added since the v0.5.1 audit (sliders, Summon, MinimapButton,
+  ResetPositions, Healthstone drag) with GLM-5.2 + Codex toward a trustworthy 1.0.
+- **GLM over-reported again — all 9 of its "findings" were false or cosmetic:**
+  claimed `M.BAG_UPDATE_DELAYED = M.Update` is a syntax error (it isn't; luac
+  passes), claimed secure buttons can't be parented to addon frames (they can —
+  universal pattern), claimed ResetPositions lowercase mapping fails (it doesn't),
+  claimed the slider region lookups and UNIT_SPELLCAST_SUCCEEDED args were wrong
+  (both fine). Codex explicitly confirmed all of these are correct.
+- **Codex found the real issues GLM missed:** (1) `makeCheck` used `cb.Text` which
+  isn't reliably present on unnamed 2.5 frames — would throw on opening options;
+  (2) secure-button OnInit had no combat guard (fails on /reload mid-fight);
+  (3) minimap right-click lock lacked the combat guard; (4) Healthstone cooldown
+  not cleared when no stone. Fixed all four. Also hardened the Summon announce
+  match (id OR name) - harmless even though codex said the args were already right.
+- Lesson reaffirmed (again): GLM's audit "criticals" need full re-triage; Codex is
+  the more reliable auditor here, but cross-checking both still caught more than
+  either alone.
+
 ### 2026-06-27 — v0.9.0: self-contained minimap button
 - **Triangulation:** both confirmed the ring math, frame setup, drag (cursor /
   UIParent:GetEffectiveScale, atan2 vs Minimap center), parent-to-Minimap.

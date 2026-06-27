@@ -7,7 +7,11 @@ local ADDON, ns = ...
 local function makeCheck(parent, label, x, y, getf, setf)
     local cb = CreateFrame("CheckButton", nil, parent, "InterfaceOptionsCheckButtonTemplate")
     cb:SetPoint("TOPLEFT", x, y)
-    cb.Text:SetText(label)
+    -- The template's built-in label region isn't reliably exposed as `.Text` on an
+    -- unnamed frame in 2.5, so use our own fontstring - guaranteed to show.
+    local fs = cb:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+    fs:SetPoint("LEFT", cb, "RIGHT", 2, 0)
+    fs:SetText(label)
     cb:SetScript("OnShow", function(self) self:SetChecked(getf()) end)
     cb:SetChecked(getf())
     cb:SetScript("OnClick", function(self) setf(self:GetChecked()) end)

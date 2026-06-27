@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.9.1 — secure/options hardening (re-audit)
+Bug-fix pass from a second full-source audit of the newer code (GLM-5.2 + Codex):
+- **Options checkboxes use their own label fontstring** instead of the template's
+  `.Text` field, which isn't reliably present on unnamed frames in 2.5 — this could
+  have thrown when the options panel opened (and the minimap button opens it).
+- **Secure buttons (Healthstone, Summon) defer their setup if `OnInit` runs in
+  combat** (e.g. a `/reload` mid-fight), instead of calling `SetAttribute`/`SetPoint`
+  under combat lockdown. They build on the next `PLAYER_REGEN_ENABLED`.
+- **Minimap right-click** lock/unlock now honors the same in-combat guard as `/wb
+  lock`, and the drag math bails safely if `Minimap:GetCenter()` returns nil.
+- **Healthstone cooldown** clears its sweep when you have no stone.
+- Summon announce now matches the cast by spell id OR resolved name (robust to
+  client arg differences).
+
 ## 0.9.0 — minimap button
 - **New module: MinimapButton** — a self-contained button on the minimap (no
   LibDBIcon dependency). **Left-click** opens options, **right-click** locks/unlocks

@@ -18,6 +18,21 @@ local M = ns:NewModule("Healthstone")
 local FALLBACK_ICON = "Interface\\Icons\\INV_Stone_04"
 
 function M:OnInit()
+    -- Secure-button setup (SetAttribute/SetPoint/RegisterForClicks) is forbidden in
+    -- combat. OnInit normally runs at login (out of combat), but a /reload mid-fight
+    -- would land here in combat - defer the build to when combat ends.
+    if InCombatLockdown() then
+        local waiter = CreateFrame("Frame")
+        waiter:RegisterEvent("PLAYER_REGEN_ENABLED")
+        waiter:SetScript("OnEvent", function(self)
+            self:UnregisterAllEvents(); self:SetScript("OnEvent", nil); M:Build()
+        end)
+        return
+    end
+    self:Build()
+end
+
+function M:Build()
     local cfg = ns.db.healthstone
     local mover = ns:MakeMover("Healthstone", 40, 40, cfg.point)
     self.mover = mover
@@ -121,6 +136,8 @@ function M:RefreshCooldown()
         else
             self.cd:SetCooldown(0, 0)   -- clear (Cooldown:Clear isn't in 2.5)
         end
+    else
+        self.cd:SetCooldown(0, 0)       -- no stone held: clear any stale sweep
     end
 end
 
