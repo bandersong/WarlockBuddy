@@ -53,6 +53,7 @@ function ns:BuildOptions()
         { "Execute",   "Drain Soul shard-on-kill alert" },
         { "PetCD",     "Pet ability cooldowns (Spell Lock / Seduce)" },
         { "Healthstone", "One-click Healthstone panic button" },
+        { "LifeTap",   "Life Tap safety cue (mana low / HP safe)" },
     }
     for _, m in ipairs(mods) do
         local key = m[1]

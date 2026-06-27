@@ -7,8 +7,6 @@ here so the next run has continuity.
 ## Next pick (queued)
 
 Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run):
-- **Life Tap safety helper** (Codex #3) — cue to tap when mana low *and* health is
-  safe, so she doesn't tap herself to death. (Strong, low-risk, no secure frames.)
 - **Curse assignment / raid curse monitor** (Codex #2) — show your assigned curse,
   warn if it drops or conflicts with another lock's.
 - **Ritual of Souls / Summoning helper** — secure button (same pattern as the
@@ -17,6 +15,20 @@ Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run)
   mirroring the Healthstone module.
 
 ## Log
+
+### 2026-06-27 — v0.5.0: Life Tap safety cue
+- **Triangulation caught contaminated data — the whole point of this rule.** GLM
+  claimed a rank table with "Rank 8 @ level 74" (TBC caps at 70) and put Improved
+  Life Tap in the Destruction tree (it's Affliction). Codex gave the correct max
+  (rank 7, spellID 27222) and tree. BUT the two **disagreed on the rank base
+  values** (rank 1 = 15 vs 30, etc.), and both agreed Life Tap scales with spell
+  damage in TBC (rank 3+, ~80% bonus shadow) — so it's not a flat constant anyway.
+- **Decision:** ship a percentage-based safety cue (green "LIFE TAP" / red "HP LOW")
+  from live health/mana fractions, and DO NOT show an expected-mana number we can't
+  verify. A number we can't trust is worse than no number. Recorded the full
+  finding in docs/TBC_API_NOTES.md (6e).
+- **Shipped:** Modules/LifeTap.lua. Thresholds configurable. No secure frames, no
+  hardcoded game-data guesses.
 
 ### 2026-06-27 — v0.4.0: Healthstone panic button
 - **Triangulation:** verified the secure-button path before building. GLM-5.2 +

@@ -48,6 +48,7 @@ ns.defaults = {
         Execute = true,
         PetCD = true,
         Healthstone = true,
+        LifeTap = true,
     },
     shards = {
         warnLow = 3,           -- turn red at/below this
@@ -100,6 +101,12 @@ ns.defaults = {
     healthstone = {
         scale = 1.0,
         point = { "CENTER", 120, -260 },
+    },
+    lifetap = {
+        manaBelow = 0.30,      -- cue appears when mana fraction drops below this
+        safeHpAbove = 0.40,    -- green only while health fraction is above this
+        scale = 1.0,
+        point = { "CENTER", 0, -150 },
     },
 }
 

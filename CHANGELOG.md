@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.5.0 — Life Tap safety cue
+- **New module: LifeTap** — an honest two-state cue: green **"LIFE TAP"** when mana
+  is low and your health is high enough to tap safely, red **"HP LOW - heal"** when
+  mana is low but tapping would drop you too far. Hidden when mana is fine.
+  Thresholds configurable (`lifetap.manaBelow` / `lifetap.safeHpAbove`).
+- Built from live health/mana fractions only — **no "expected mana" number**,
+  because the per-rank Life Tap values and any spell-power scaling are
+  disputed/ambiguous for 2.5 (one reviewer's data was WotLK-contaminated). A
+  percentage cue needs none of that and can't be wrong about game data.
+
 ## 0.4.0 — One-click Healthstone panic button
 - **New module: Healthstone** — a real secure button you can click (or keybind via
   a `/click WarlockBuddyHealthstoneButton` macro) to use your healthstone **in

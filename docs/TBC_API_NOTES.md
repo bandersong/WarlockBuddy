@@ -133,6 +133,33 @@ item or call `UseItemByName` in combat — it requires a hardware event through 
 - Keybind: bind a macro `/click WarlockBuddyHealthstoneButton` (the `/click` from a
   keypress is itself a hardware event, so it works in combat).
 
+## 6e. Life Tap — why we show a cue, not a number
+
+The LifeTap module shows a percentage-based safety cue and **no "expected mana"
+figure**, on purpose. What we verified:
+
+- Life Tap **does** scale with spell damage in TBC (both reviewers): rank 3+ adds
+  ~80% of bonus shadow damage to the health-lost/mana-gained value. So it is *not*
+  a flat per-rank constant.
+- Improved Life Tap (Affliction tree — *not* Destruction, GLM had that wrong)
+  increases **mana gained only** by 10/20%; health lost is unchanged.
+- There is **no clean API** for the computed value: Life Tap has no normal spell
+  cost (`GetSpellPowerCost` is useless here — the health→mana is a spell *effect*),
+  and `GetSpellInfo` returns identity/metadata only. You'd have to hardcode rank
+  bases + the coefficient, or parse the localized tooltip.
+- The two reviewers **disagreed on the rank base values** (e.g. rank 1 = 15 vs 30;
+  full tables differ) and one table was WotLK-contaminated (listed a rank 8 at
+  "level 74" — TBC caps at 70, max rank is 7, spellID 27222, base 582). Since we
+  can't reconcile the numbers against ground truth, we don't display one.
+- Live stats are solid: `UnitHealth/UnitHealthMax/UnitPower("player",0)/
+  UnitPowerMax` all work; drive with `UNIT_HEALTH` + `UNIT_POWER_UPDATE`
+  (arg1 unit; arg2 of the latter is the `"MANA"` token). Sane safety margin is
+  ~25-40% of max health remaining after the tap.
+
+If we ever want a mana-return prediction, first nail the rank base table against
+an authoritative TBC source (or in-game tooltip parse) — don't trust a single
+model's numbers.
+
 ## 7. APIs we deliberately AVOID (retail/Wrath traps)
 
 - `C_UnitAuras.*` / `AuraUtil.*` — retail only, **do not exist** in 2.5.
