@@ -57,8 +57,16 @@ ns.spellID = {
 -- Item ids
 ns.itemID = {
     SoulShard = 6265,
-    -- Healthstones (all TBC ranks) - summed for a total + best display
-    Healthstones = { 5512, 5511, 5509, 5510, 9421, 19005, 22105 },
+    -- Healthstones: complete TBC id set (base ranks + Master + Improved-talent
+    -- variants). A warlock can only hold ONE healthstone at a time, so we just
+    -- need this list to be COMPLETE - the first id with count > 0 is the one she
+    -- has, and ranking doesn't matter for finding it.
+    Healthstones = {
+        22105,                                            -- Master (TBC)
+        9421, 5510, 5509, 5511, 5512,                     -- base ranks
+        19004, 19005, 19006, 19007, 19008, 19009,         -- Improved-talent
+        19010, 19011, 19012, 19013,                       -- variants
+    },
     -- Soulstones (all TBC ranks)
     Soulstones   = { 5232, 16892, 16893, 16895, 16896, 22116 },
     -- Spellstones / Firestones (carried) - reminder if no weapon enchant

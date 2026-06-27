@@ -47,6 +47,7 @@ ns.defaults = {
         CC = true,
         Execute = true,
         PetCD = true,
+        Healthstone = true,
     },
     shards = {
         warnLow = 3,           -- turn red at/below this
@@ -95,6 +96,10 @@ ns.defaults = {
     petcd = {
         scale = 1.0,
         point = { "CENTER", -260, -220 },
+    },
+    healthstone = {
+        scale = 1.0,
+        point = { "CENTER", 120, -260 },
     },
 }
 

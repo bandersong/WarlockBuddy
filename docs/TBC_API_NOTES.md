@@ -110,6 +110,29 @@ on the bar and expose cooldowns directly (both reviewers, high confidence).
   unreliable in 2.5 (GLM disagreed); we don't register it, so the disagreement is
   moot and there's no "unknown event" risk.
 
+## 6d. In-combat Healthstone use — secure button (verified)
+
+Using an item in combat is a **protected action**: a plain addon cannot `/use` an
+item or call `UseItemByName` in combat — it requires a hardware event through a
+`SecureActionButton`. Both reviewers confirmed at 95-99% (no disagreement):
+
+- `CreateFrame("Button", name, parent, "SecureActionButtonTemplate")` exists in
+  2.5. Set `type = "macro"` and `macrotext = "/use item:<id>"`; a real click then
+  uses the item, in combat included.
+- **Secure attributes can't be changed while `InCombatLockdown()`** is true.
+  So set the macrotext OUT of combat (we use `BAG_UPDATE_DELAYED` +
+  `PLAYER_REGEN_ENABLED` + `PLAYER_ENTERING_WORLD`); the value persists into the
+  fight. Guard every `SetAttribute` with `if not InCombatLockdown()`.
+- `GetItemCooldown(id)` → `start, duration, enable`. Healthstones share the 2-min
+  potion cooldown category. `GetItemIcon(id)` gives the icon without a tooltip
+  scan. Clear a Cooldown with `SetCooldown(0, 0)` (`Cooldown:Clear` isn't in 2.5).
+- **Taint:** none, as long as the button is our own frame, never parented under a
+  protected Blizzard frame, and only sets attributes on itself out of combat.
+- A warlock holds only ONE healthstone at a time, so we don't rank by potency — we
+  just scan the full id list and use the first one held.
+- Keybind: bind a macro `/click WarlockBuddyHealthstoneButton` (the `/click` from a
+  keypress is itself a hardware event, so it works in combat).
+
 ## 7. APIs we deliberately AVOID (retail/Wrath traps)
 
 - `C_UnitAuras.*` / `AuraUtil.*` — retail only, **do not exist** in 2.5.

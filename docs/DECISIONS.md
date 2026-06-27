@@ -7,15 +7,29 @@ here so the next run has continuity.
 ## Next pick (queued)
 
 Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run):
+- **Life Tap safety helper** (Codex #3) — cue to tap when mana low *and* health is
+  safe, so she doesn't tap herself to death. (Strong, low-risk, no secure frames.)
 - **Curse assignment / raid curse monitor** (Codex #2) — show your assigned curse,
   warn if it drops or conflicts with another lock's.
-- **Life Tap safety helper** (Codex #3) — cue to tap when mana low *and* health is
-  safe, so she doesn't tap herself to death.
-- **Healthstone emergency button** — secure action button (`/use Healthstone`);
-  verify SecureActionButtonTemplate + macrotext taint rules in 2.5 first.
-- **Ritual of Souls / Summoning helper** — one-click summon assist out of combat.
+- **Ritual of Souls / Summoning helper** — secure button (same pattern as the
+  Healthstone button now proven) for Ritual of Souls / Summon out of combat.
+- **Soulstone emergency button** — secure `/use` button for the soulstone item,
+  mirroring the Healthstone module.
 
 ## Log
+
+### 2026-06-27 — v0.4.0: Healthstone panic button
+- **Triangulation:** verified the secure-button path before building. GLM-5.2 +
+  Codex agreed at 95-99% on every point, NO disagreement: SecureActionButtonTemplate
+  works in 2.5; `type=macro`/`macrotext=/use item:<id>` uses the item in combat;
+  attributes must be set out of combat; `GetItemCooldown` = start/duration/enable;
+  zero taint when self-contained. Both stressed: scan for the held stone, don't
+  hardcode one id.
+- **Insight that simplified it:** a warlock can only carry ONE healthstone, so no
+  potency ranking needed — just a complete id list, first-held wins.
+- **Shipped:** Modules/Healthstone.lua (secure button + cooldown + out-of-stones
+  state) and a Util `secureChild` hook so the button drags while unlocked and
+  clicks while locked. Keybind via `/click WarlockBuddyHealthstoneButton`.
 
 ### 2026-06-27 — v0.3.0: Pet utility cooldown tracker (the queued #1)
 - **Triangulation:** verified the pet-action API before building (as the prior

@@ -20,6 +20,9 @@ Built to cover every warlock spec — Affliction, Demonology, Destruction — ou
 | **Soulstone** | Tracks the Soulstone Resurrection buff across your whole party/raid with time left, and can announce in chat when *you* soulstone someone. |
 | **Reminders** | Nags when you have **no Fel/Demon Armor** up or **no Spellstone/Firestone** weapon enchant. |
 | **CC** | Countdown bars for your **Banish / Fear / Seduction / Enslave / Howl of Terror / Death Coil** on the target — recast before it breaks. |
+| **PetCD** | Ready / cooldown bars for the current pet's utility abilities — **Spell Lock**, **Seduction**, **Devour Magic**, **Sacrifice**, **Intercept**, **Suffering**. |
+| **Execute** | Big **DRAIN SOUL** flash when the target drops to ~25% so you bank a soul shard on the kill. |
+| **Healthstone** | One-click **Healthstone panic button** that works in combat — click it or keybind it. Shows cooldown and dims when you're out. |
 
 Everything is a **draggable frame** and every module can be **toggled independently**.
 
@@ -31,6 +34,10 @@ Everything is a **draggable frame** and every module can be **toggled independen
 | `/wb unlock` | Show drag handles — move frames anywhere |
 | `/wb lock` | Lock frames in place |
 | `/wb reset` | Reset all settings (then `/reload`) |
+
+**Keybind the Healthstone button:** make a macro with the text
+`/click WarlockBuddyHealthstoneButton` and bind it — it'll use your healthstone in
+combat from a keypress.
 
 ## Install
 

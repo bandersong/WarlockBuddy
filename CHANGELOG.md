@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.0 — One-click Healthstone panic button
+- **New module: Healthstone** — a real secure button you can click (or keybind via
+  a `/click WarlockBuddyHealthstoneButton` macro) to use your healthstone **in
+  combat**. Shows the stone's icon, dims with a red "0" when you're out of stones,
+  and runs a cooldown sweep (healthstones share the 2-min potion cooldown).
+- Auto-targets whichever healthstone rank/variant you're carrying (warlocks hold
+  only one at a time); re-points itself out of combat on bag changes and on
+  leaving combat, since secure attributes can't change mid-fight.
+- Util: movers now support a `secureChild` so the panic button is draggable while
+  unlocked and clickable while locked.
+- Verified the whole secure-button approach with GLM-5.2 + Codex (95-99%
+  confidence, no disagreement); documented in docs/TBC_API_NOTES.md (6d).
+
 ## 0.3.0 — Pet utility cooldown tracker
 - **New module: PetCD** — ready/cooldown bars for the current pet's key utility
   abilities: **Spell Lock** (Felhunter interrupt), **Seduction** (Succubus CC),
