@@ -34,7 +34,7 @@ end
 
 function M:Build()
     local cfg = ns.db.healthstone
-    local mover = ns:MakeMover("Healthstone", 40, 40, cfg.point)
+    local mover = ns:MakeMover("Healthstone", 40, 40, cfg.point, "One-click healthstone (panic heal)")
     self.mover = mover
     mover:SetScale(cfg.scale or 1)
 
@@ -62,6 +62,18 @@ function M:Build()
         local point, _, _, x, y = mover:GetPoint()
         cfg.point[1], cfg.point[2], cfg.point[3] = point, x, y
     end)
+
+    -- The secure button is always mouse-on (for clicking), so gate its tooltip to
+    -- config mode by hand to match the other frames.
+    btn:SetScript("OnEnter", function(self)
+        if ns.db.locked then return end
+        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+        GameTooltip:AddLine("|cff9482c9Healthstone|r")
+        GameTooltip:AddLine("One-click healthstone (panic heal)", 1, 1, 1, true)
+        GameTooltip:AddLine("Click = use · Drag = move", 0.6, 0.6, 0.6)
+        GameTooltip:Show()
+    end)
+    btn:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
     local bg = btn:CreateTexture(nil, "BACKGROUND")
     bg:SetAllPoints()

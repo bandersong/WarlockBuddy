@@ -11,7 +11,7 @@ local WATCH = { "ShadowTrance", "Backlash" }
 
 function M:OnInit()
     local cfg = ns.db.procs
-    local mover = ns:MakeMover("Procs", 64, 64, cfg.point)
+    local mover = ns:MakeMover("Procs", 64, 64, cfg.point, "Shadow Trance / Backlash proc alert")
     self.mover = mover
 
     local icon = mover:CreateTexture(nil, "ARTWORK")

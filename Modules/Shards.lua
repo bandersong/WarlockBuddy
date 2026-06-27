@@ -7,7 +7,7 @@ local M = ns:NewModule("Shards")
 
 function M:OnInit()
     local cfg = ns.db.shards
-    local mover = ns:MakeMover("Shards", 120, 56, cfg.point)
+    local mover = ns:MakeMover("Shards", 120, 56, cfg.point, "Soul shards + healthstone/soulstone counts")
     self.mover = mover
 
     -- Use an explicit SetFont rather than relying on a "Huge" font template

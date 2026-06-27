@@ -10,7 +10,7 @@ local M = ns:NewModule("Execute")
 
 function M:OnInit()
     local cfg = ns.db.execute
-    local mover = ns:MakeMover("Execute", 64, 64, cfg.point)
+    local mover = ns:MakeMover("Execute", 64, 64, cfg.point, "Drain Soul shard-on-kill alert")
     self.mover = mover
     mover:SetScale(cfg.scale or 1)
 

@@ -55,11 +55,12 @@ end
 -- ---------------------------------------------------------------------------
 ns.movers = {}
 
-function ns:MakeMover(name, w, h, savedPoint)
+function ns:MakeMover(name, w, h, savedPoint, desc)
     local mv = CreateFrame("Frame", "WarlockBuddyMover_" .. name, UIParent)
     mv:SetSize(w, h)
     mv:SetMovable(true)
     mv:SetClampedToScreen(true)
+    mv.desc = desc
 
     -- restore position
     local p = savedPoint or { "CENTER", 0, 0 }
@@ -85,6 +86,17 @@ function ns:MakeMover(name, w, h, savedPoint)
             savedPoint[1], savedPoint[2], savedPoint[3] = point, x, y
         end
     end)
+
+    -- Hover tooltip naming each frame. Only fires while UNLOCKED (movers are
+    -- EnableMouse(false) when locked), so it's a config-mode "what's this?" helper.
+    mv:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+        GameTooltip:AddLine("|cff9482c9" .. name .. "|r")
+        if self.desc then GameTooltip:AddLine(self.desc, 1, 1, 1, true) end
+        GameTooltip:AddLine("Drag to move", 0.6, 0.6, 0.6)
+        GameTooltip:Show()
+    end)
+    mv:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
     ns.movers[name] = mv
     ns:LockMover(mv, ns.db.locked)

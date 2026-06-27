@@ -16,7 +16,7 @@ local POOL = 6   -- max bars (we never track more utility abilities than this)
 
 function M:OnInit()
     local cfg = ns.db.petcd
-    local mover = ns:MakeMover("PetCD", 170, POOL * 22, cfg.point)
+    local mover = ns:MakeMover("PetCD", 170, POOL * 22, cfg.point, "Pet ability cooldowns (Spell Lock, Seduce...)")
     self.mover = mover
     mover:SetScale(cfg.scale or 1)
 

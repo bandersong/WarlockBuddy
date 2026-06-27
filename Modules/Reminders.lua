@@ -9,7 +9,7 @@ local M = ns:NewModule("Reminders")
 
 function M:OnInit()
     local cfg = ns.db.reminders
-    local mover = ns:MakeMover("Reminders", 200, 40, cfg.point)
+    local mover = ns:MakeMover("Reminders", 200, 40, cfg.point, "Armor / weapon-stone reminders")
     self.mover = mover
 
     local txt = mover:CreateFontString(nil, "OVERLAY", "GameFontNormal")

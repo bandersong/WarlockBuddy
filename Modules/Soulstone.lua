@@ -8,7 +8,7 @@ local M = ns:NewModule("Soulstone")
 
 function M:OnInit()
     local cfg = ns.db.soulstone
-    local mover = ns:MakeMover("Soulstone", 170, 40, cfg.point)
+    local mover = ns:MakeMover("Soulstone", 170, 40, cfg.point, "Who in your group has a soulstone")
     self.mover = mover
 
     local title = mover:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")

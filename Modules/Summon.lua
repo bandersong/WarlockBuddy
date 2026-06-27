@@ -47,7 +47,7 @@ function M:Build()
     local cfg = ns.db.summon
     self.ritualName = GetSpellInfo(ns.spellID.RitualOfSummoning)
 
-    local mover = ns:MakeMover("Summon", 130, 24, cfg.point)
+    local mover = ns:MakeMover("Summon", 130, 24, cfg.point, "Ritual of Summoning buttons")
     self.mover = mover
     mover:SetScale(cfg.scale or 1)
 

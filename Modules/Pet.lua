@@ -9,7 +9,7 @@ local M = ns:NewModule("Pet")
 
 function M:OnInit()
     local cfg = ns.db.pet
-    local mover = ns:MakeMover("Pet", 160, 54, cfg.point)
+    local mover = ns:MakeMover("Pet", 160, 54, cfg.point, "Pet health, mana, Soul Link, Dark Pact")
     self.mover = mover
     mover:SetScale(cfg.scale or 1)
 

@@ -7,9 +7,10 @@ here so the next run has continuity.
 ## Next pick (queued)
 
 Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run):
-- **Hover tooltips on frames** — only viable in UNLOCKED/config mode (locked frames
-  must stay EnableMouse(false) or they block world clicks; both reviewers agree).
-- **1.0 visual polish** (both reviewers #3) — consistent fonts/sizes across frames.
+- **1.0 visual polish** — consistent fonts/sizes/bar textures across frames.
+- **In-game test pass** — THE remaining 1.0 gate; nothing has run in WoW yet.
+  Feature set + onboarding + diagnostics are now in place to make that test
+  productive (`/wb status` surfaces load errors).
 - **In-game test pass** — biggest remaining unknown: nothing has run in WoW yet.
   When possible, load it on a real warlock and fix what actually breaks before
   calling it 1.0.
@@ -26,6 +27,18 @@ Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run)
   mirroring the Healthstone module.
 
 ## Log
+
+### 2026-06-27 — v0.9.5: config-mode frame tooltips
+- **Triangulation: clean agreement.** Both confirmed GameTooltip
+  (SetOwner/AddLine/Show) is valid in 2.5, that EnableMouse(false) on locked movers
+  naturally limits tooltips to config mode (no extra state checks), and that the
+  secure-covered frames (Healthstone/Summon) need the tooltip on the button itself.
+  Both ranked tooltips above a fonts pass for 1.0 value. Codex extras applied:
+  SetOwner before lines, Hide on OnLeave.
+- **Shipped:** centralized OnEnter/OnLeave tooltip in MakeMover (+ desc param);
+  added a per-frame description to all 12 MakeMover calls; Healthstone button gets
+  its own unlocked-gated tooltip. Summon's buttons already show member names, so no
+  extra tooltip there.
 
 ### 2026-06-27 — v0.9.4: /wb status diagnostic
 - **Triangulation:** Codex (high) ranked /wb status the highest-value low-risk

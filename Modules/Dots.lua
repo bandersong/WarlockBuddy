@@ -7,7 +7,7 @@ local M = ns:NewModule("Dots")
 
 function M:OnInit()
     local cfg = ns.db.dots
-    local mover = ns:MakeMover("DoTs", 200, (cfg.max or 8) * 20, cfg.point)
+    local mover = ns:MakeMover("DoTs", 200, (cfg.max or 8) * 20, cfg.point, "Your DoT & curse timers on the target")
     self.mover = mover
     mover:SetScale(cfg.scale or 1)
 

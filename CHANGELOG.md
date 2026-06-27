@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.5 — config-mode frame tooltips
+- When you **unlock** frames (`/wb unlock`), hovering any WarlockBuddy frame now
+  shows a tooltip naming it and explaining what it is ("DoTs — Your DoT & curse
+  timers on the target", etc.) plus "Drag to move". Makes it obvious which box is
+  which while you're arranging them.
+- Tooltips are naturally limited to config mode — locked frames stay click-through
+  (mouse off), so they never get in the way during play. The Healthstone button
+  (always clickable) gates its own tooltip to the unlocked state.
+
 ## 0.9.4 — /wb status diagnostic
 - **`/wb status`** prints the version and, per module, whether it's off / loaded ok
   / errored (with the error text). Each module's `OnInit` is already wrapped in a

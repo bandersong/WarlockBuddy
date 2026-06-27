@@ -17,7 +17,7 @@ local M = ns:NewModule("LifeTap")
 
 function M:OnInit()
     local cfg = ns.db.lifetap
-    local mover = ns:MakeMover("LifeTap", 130, 28, cfg.point)
+    local mover = ns:MakeMover("LifeTap", 130, 28, cfg.point, "Life Tap safety cue")
     self.mover = mover
     mover:SetScale(cfg.scale or 1)
 

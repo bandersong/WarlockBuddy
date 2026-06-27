@@ -8,7 +8,7 @@ local M = ns:NewModule("CC")
 
 function M:OnInit()
     local cfg = ns.db.cc
-    local mover = ns:MakeMover("CC", 200, #ns.ccOrder * 22, cfg.point)
+    local mover = ns:MakeMover("CC", 200, #ns.ccOrder * 22, cfg.point, "Your Banish / Fear / Seduce timers")
     self.mover = mover
     mover:SetScale(cfg.scale or 1)
 
