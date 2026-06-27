@@ -45,6 +45,7 @@ ns.defaults = {
         Soulstone = true,
         Reminders = true,
         CC = true,
+        Execute = true,
     },
     shards = {
         warnLow = 3,           -- turn red at/below this
@@ -82,6 +83,13 @@ ns.defaults = {
     cc = {
         point = { "CENTER", 0, 240 },
         scale = 1.0,
+    },
+    execute = {
+        threshold = 0.25,      -- alert when target at/below this health fraction
+        flash = true,
+        sound = true,
+        scale = 1.0,
+        point = { "CENTER", 0, -120 },
     },
 }
 

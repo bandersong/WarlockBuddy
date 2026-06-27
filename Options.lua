@@ -50,6 +50,7 @@ function ns:BuildOptions()
         { "Soulstone", "Soulstone tracker + announce" },
         { "Reminders", "Armor / weapon-stone nags" },
         { "CC",        "Banish / Fear / Seduce timers" },
+        { "Execute",   "Drain Soul shard-on-kill alert" },
     }
     for _, m in ipairs(mods) do
         local key = m[1]

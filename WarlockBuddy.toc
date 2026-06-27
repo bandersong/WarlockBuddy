@@ -2,7 +2,7 @@
 ## Title: WarlockBuddy
 ## Notes: Everything a TBC Classic warlock needs - shards, DoT timers, procs, pet, CC, soulstone & reminders.
 ## Author: bandersong
-## Version: 0.1.0
+## Version: 0.2.0
 ## SavedVariables: WarlockBuddyDB
 ## DefaultState: enabled
 ## IconTexture: Interface\Icons\Spell_Shadow_DeathCoil
@@ -19,5 +19,6 @@ Modules\Pet.lua
 Modules\Soulstone.lua
 Modules\Reminders.lua
 Modules\CC.lua
+Modules\Execute.lua
 
 Options.lua

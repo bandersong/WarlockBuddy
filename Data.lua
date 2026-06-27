@@ -23,6 +23,9 @@ ns.spellID = {
     CurseOfRecklessness = 704,
     CurseOfExhaustion   = 18223,
 
+    -- Channels / execute
+    DrainSoul           = 1120,    -- shard-on-kill execute
+
     -- Crowd control / utility (timed)
     Banish              = 710,
     EnslaveDemon        = 1098,

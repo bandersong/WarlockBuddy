@@ -78,6 +78,16 @@ bars; `C_Timer` is fine to use elsewhere.
 to detect a missing Spellstone/Firestone weapon enchant (the Reminders module).
 There's no event for the enchant timer, so we poll once a second.
 
+## 6b. Pet power events (verified)
+
+For a pet mana bar in 2.5, register **`UNIT_POWER_UPDATE`** (it exists; do *not*
+use `UNIT_MANA`, and `UNIT_POWER` is the older/less-correct form). `UnitPower("pet",
+0)` / `UnitPowerMax("pet", 0)` (powerType `0` = mana) work. The event payload is
+`(unit, powerToken)` where `powerToken` is the **string** `"MANA"` (not an
+integer) — so an optional efficiency filter is `if powerToken ~= "MANA" then
+return end`. Our Pet module just filters `unit == "pet"`, which is correct
+regardless. (Triangulated: Codex correct on the string token; GLM had said int.)
+
 ## 7. APIs we deliberately AVOID (retail/Wrath traps)
 
 - `C_UnitAuras.*` / `AuraUtil.*` — retail only, **do not exist** in 2.5.
