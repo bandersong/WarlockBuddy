@@ -19,7 +19,9 @@ jobs:
           luaVersion: "5.1.5"
 
       - name: Syntax-check every .lua (luac -p)
-        run: find . -name '*.lua' -not -path './.git/*' -print0 | xargs -0 -n1 luac -p
+        # -type f (skip dirs); exclude .git and the .lua/ dir the Lua setup action
+        # installs into the workspace (otherwise we'd lint Lua's own files / a dir).
+        run: find . -type f -name '*.lua' -not -path './.git/*' -not -path './.lua/*' -print0 | xargs -0 -r -n1 luac -p
 
       - name: Headless smoke + behavior tests
         run: lua tests/headless.lua
