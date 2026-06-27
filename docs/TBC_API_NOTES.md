@@ -213,6 +213,27 @@ the living-player buff is "Soulstone Resurrection" (verified round 6 vs Wowhead)
   is exactly why every module is independently toggleable and spec-agnostic.
 - `C_NamePlate.GetNamePlateUnitUnit()` — not available.
 
+### 7b. Event system: why plain RegisterEvent (not RegisterUnitEvent)
+
+Our shared event frame uses `frame:RegisterEvent("UNIT_AURA")` etc. and filters by
+the unit token inside each handler (`if unit == "target"`). We considered
+`frame:RegisterUnitEvent("UNIT_AURA", "player", "target")` to cut event spam in
+raids, and **decided against it** — investigated, not an oversight:
+
+- **Existence is uncertain in 2.5** and we don't want to rely on it. (GLM said it's
+  absent — introduced retail 6.0.2 — but its "Classic is capped at 2.4.3 API"
+  premise is demonstrably false here, since 2.5 *does* have modern
+  `CombatLogGetCurrentEventInfo`/`C_Timer`. So existence is genuinely unconfirmed;
+  treat as not-relied-upon.)
+- **Negligible benefit for the target user.** The win only matters in 25-man raids
+  (UNIT_AURA/UNIT_HEALTH fire thousands of times/min). In 5-man/leveling the
+  in-handler `if unit ==` filter costs a fraction of a millisecond.
+- **A shared dispatch frame erodes the gain anyway** — it would have to register
+  the *union* of every module's units, then re-filter in Lua.
+
+If WarlockBuddy ever targets serious raiding, revisit: confirm `RegisterUnitEvent`
+on a live 2.5 client first, then register the per-event unit union on the frame.
+
 ## 8. .toc Interface version
 
 `## Interface: 20504` for the TBC Anniversary / 2.5.x client (both sources,

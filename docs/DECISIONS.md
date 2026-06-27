@@ -31,6 +31,20 @@ IN-GAME TEST PASS, not more features** — and that can't be done from this mach
 
 ## Log
 
+### 2026-06-27 — investigated RegisterUnitEvent; deliberately NOT doing it
+- GLM's auto-consult flagged that registering UNIT_AURA globally (filtering unit in
+  the handler) spams events in raids, suggesting `RegisterUnitEvent`. Investigated.
+- **Decision: no change.** Existence of `RegisterUnitEvent` in 2.5 is unconfirmed
+  (GLM says absent, but via the false "Classic = 2.4.3 API" premise; can't verify
+  here), the perf gain is negligible for the actual user (5-man/leveling, not
+  25-man), and a shared dispatch frame would need the unit-union and re-filter in
+  Lua anyway — eroding the gain. Documented in TBC_API_NOTES 7b so it isn't
+  re-investigated every loop.
+- **Meta:** this confirms the loop is in churn territory. The addon is
+  feature-complete, audited, tested, CI-gated on 5.1, and auto-releasing; the only
+  real remaining work is the human in-game pass (docs/TESTING.md). Recommend
+  converting the cron loop to on-demand to stop spending tokens on marginal runs.
+
 ### 2026-06-27 — v0.9.8: automated releases + cleaner zips
 - Added `.github/workflows/release.yml`: a `v*` tag push auto-builds the clean
   zip (git archive --prefix=WarlockBuddy/) and publishes the Release. Fits his
