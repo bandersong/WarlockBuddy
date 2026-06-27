@@ -172,7 +172,9 @@ function ns:Init()
 
     for _, name in ipairs(moduleOrder) do
         local m = ns.modules[name]
-        if m.OnInit then
+        -- Only build modules the user has enabled - a disabled (or known-broken)
+        -- module shouldn't create frames / register events / secure buttons.
+        if ns:ModuleEnabled(name) and m.OnInit then
             local ok, err = pcall(m.OnInit, m)
             if not ok then
                 ns:Print("|cffff5555module " .. name .. " failed:|r " .. tostring(err))
@@ -199,17 +201,23 @@ end
 -- ---------------------------------------------------------------------------
 SLASH_WARLOCKBUDDY1 = "/wb"
 SLASH_WARLOCKBUDDY2 = "/warlockbuddy"
-SlashCmdHandler = function(msg)
+local function SlashCmdHandler(msg)
     msg = (msg or ""):lower():gsub("^%s+", ""):gsub("%s+$", "")
 
-    if msg == "unlock" then
-        ns.db.locked = false
-        ns:SetMoversLocked(false)
-        ns:Print("movers |cff55ff55UNLOCKED|r - drag frames, then |cffcc99ff/wb lock|r.")
-    elseif msg == "lock" then
-        ns.db.locked = true
-        ns:SetMoversLocked(true)
-        ns:Print("movers |cffff5555LOCKED|r.")
+    if msg == "unlock" or msg == "lock" then
+        -- Secure (Healthstone) button drag setup must not be toggled mid-combat.
+        if InCombatLockdown() then
+            ns:Print("|cffff5555can't lock/unlock in combat|r - try again after.")
+            return
+        end
+        local unlock = (msg == "unlock")
+        ns.db.locked = not unlock
+        ns:SetMoversLocked(ns.db.locked)
+        if unlock then
+            ns:Print("movers |cff55ff55UNLOCKED|r - drag frames, then |cffcc99ff/wb lock|r.")
+        else
+            ns:Print("movers |cffff5555LOCKED|r.")
+        end
     elseif msg == "reset" then
         WarlockBuddyDB = {}
         ns:Print("settings reset. /reload to apply.")

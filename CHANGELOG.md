@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.5.1 — correctness hardening (audit fixes)
+Bug-fix pass from a full-source audit (GLM-5.2 + Codex). The important one:
+- **Healthstone button was unusable by default.** It's unlocked on a fresh install,
+  and the old "secure child" logic disabled the button's mouse while unlocked — so
+  the panic button couldn't be clicked until you ran `/wb lock`. The button is now
+  ALWAYS clickable; dragging is handled by the button itself and only while
+  unlocked (a plain click uses the stone, a press-drag moves it).
+- `/wb lock` / `/wb unlock` now refuse to run **in combat** (you can't reconfigure a
+  secure button mid-fight; it would silently leave the button in a bad state).
+- Modules that are toggled **off** no longer run their `OnInit` (no frames / events /
+  secure buttons created for disabled modules).
+- Hardening: shard counter uses an explicit `SetFont` instead of relying on a
+  "Huge" font template existing; `PetCD` clears its table by reassignment instead
+  of `wipe()`; the slash handler is now a local (no global namespace leak).
+
 ## 0.5.0 — Life Tap safety cue
 - **New module: LifeTap** — an honest two-state cue: green **"LIFE TAP"** when mana
   is low and your health is high enough to tap safely, red **"HP LOW - heal"** when

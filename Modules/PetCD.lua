@@ -66,7 +66,7 @@ end
 
 -- Rebuild the tracked list when the pet or its bar changes.
 function M:Rebuild()
-    wipe(self.tracked)
+    self.tracked = {}   -- reassign (avoids any dependence on the wipe() global)
     if UnitExists("pet") and ns.petAbilityNameToKey then
         local seen = {}
         for slot = 1, SLOTS do

@@ -9,12 +9,35 @@ here so the next run has continuity.
 Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run):
 - **Curse assignment / raid curse monitor** (Codex #2) — show your assigned curse,
   warn if it drops or conflicts with another lock's.
+- **Soulstone announce is brittle** (both reviewers) — the CLEU match may miss real
+  soulstone applications. Verify the exact 2.5 subevent/payload for a soulstone
+  apply against ground truth, then key off it (or off the item spell id).
 - **Ritual of Souls / Summoning helper** — secure button (same pattern as the
   Healthstone button now proven) for Ritual of Souls / Summon out of combat.
 - **Soulstone emergency button** — secure `/use` button for the soulstone item,
   mirroring the Healthstone module.
 
 ## Log
+
+### 2026-06-27 — v0.5.1: correctness hardening (audit triage)
+- Ran a full-source bug audit through GLM-5.2 + Codex (the addon has never run
+  in-game yet). **This was a textbook triage win.** GLM returned 8 "critical" bugs;
+  cross-checking against Codex + known TBC truth, most were FALSE:
+  - "event dispatch is nil / `function M:EVENT()` doesn't set the key" — wrong;
+    Codex confirmed the `fn(m, ...)` shape is correct.
+  - "`wipe` doesn't exist / it's Ace3-only" — wrong, it's a WoW global.
+  - "`GetWeaponEnchantInfo` misused" — wrong, the code already matched GLM's own fix.
+  - "`OpenOptions` undefined" — artifact: Options.lua wasn't in the audited blob.
+  - "`CombatLogGetCurrentEventInfo` returns 12 not 13" — Codex: the unpack matches
+    the modern Classic-style return shape. Kept as-is.
+- **Codex caught a real one GLM missed:** the Healthstone secure button was dead by
+  default (unlocked install + mouse disabled while unlocked). Fixed: button always
+  clickable, self-managed drag gated by lock. Also added a combat guard on
+  lock/unlock and stopped disabled modules from running OnInit.
+- **Genuinely-real items shipped:** Healthstone-dead-by-default, lock/unlock combat
+  guard, disabled-module OnInit gate, + safe hardening (explicit SetFont, table
+  reassign vs wipe, local slash fn). Lesson reaffirmed: a "bug audit" over-reports —
+  re-triage every claim against a second model + ground truth before touching code.
 
 ### 2026-06-27 — v0.5.0: Life Tap safety cue
 - **Triangulation caught contaminated data — the whole point of this rule.** GLM

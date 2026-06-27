@@ -102,12 +102,9 @@ function ns:LockMover(mv, locked)
         mv.label:Show()
     end
     -- A secure click button (e.g. the Healthstone panic button) lives as a child
-    -- of its mover. While UNLOCKED the mover must capture the drag, so we turn the
-    -- child's mouse OFF; while LOCKED the child takes clicks so it's usable.
-    -- (Toggled only via /wb lock|unlock, i.e. out of combat - safe for secure frames.)
-    if mv.secureChild and not InCombatLockdown() then
-        mv.secureChild:EnableMouse(locked and true or false)
-    end
+    -- of its mover and stays ALWAYS clickable - it manages its own drag (gated by
+    -- lock) so it never becomes dead while unlocked. We only toggle the mover's
+    -- own drag visuals here; the secure child handles itself.
 end
 
 function ns:SetMoversLocked(locked)

@@ -23,14 +23,30 @@ function M:OnInit()
     self.mover = mover
     mover:SetScale(cfg.scale or 1)
 
-    -- the secure button (our own frame; never parented under protected UI)
+    -- the secure button (our own frame; never parented under protected UI).
+    -- It is ALWAYS mouse-enabled so the panic click works regardless of lock
+    -- state. Dragging is handled by the button itself and only when unlocked, so
+    -- a plain click always uses the stone and a press-drag (while unlocked) moves
+    -- it. This avoids the "button dead until locked" trap.
     local btn = CreateFrame("Button", "WarlockBuddyHealthstoneButton", mover,
         "SecureActionButtonTemplate")
     btn:SetAllPoints(mover)
+    btn:EnableMouse(true)
     btn:RegisterForClicks("AnyUp")
+    btn:RegisterForDrag("LeftButton")
     btn:SetAttribute("type", "macro")
     self.btn = btn
     mover.secureChild = btn
+
+    -- drag moves the parent mover, but only while unlocked and out of combat
+    btn:SetScript("OnDragStart", function()
+        if not ns.db.locked and not InCombatLockdown() then mover:StartMoving() end
+    end)
+    btn:SetScript("OnDragStop", function()
+        mover:StopMovingOrSizing()
+        local point, _, _, x, y = mover:GetPoint()
+        cfg.point[1], cfg.point[2], cfg.point[3] = point, x, y
+    end)
 
     local bg = btn:CreateTexture(nil, "BACKGROUND")
     bg:SetAllPoints()

@@ -10,7 +10,11 @@ function M:OnInit()
     local mover = ns:MakeMover("Shards", 120, 56, cfg.point)
     self.mover = mover
 
-    local count = mover:CreateFontString(nil, "OVERLAY", "GameFontNormalHuge")
+    -- Use an explicit SetFont rather than relying on a "Huge" font template
+    -- existing in 2.5 - this guarantees a big, readable shard number on every
+    -- client. Inherit GameFontNormal first so we keep sane defaults, then resize.
+    local count = mover:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    count:SetFont(STANDARD_TEXT_FONT, 26, "OUTLINE")
     count:SetPoint("CENTER", mover, "CENTER", 0, 6)
     self.count = count
 
