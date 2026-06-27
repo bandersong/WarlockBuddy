@@ -191,6 +191,21 @@ of `math.atan(y, x)` is Lua 5.3+ only. Use `math.atan2` (with a 2-arg `math.atan
 fallback for safety). GLM said the opposite (use `math.atan` not `atan2`) — wrong;
 Codex confirmed `math.atan2`.
 
+## 6h. Soulstone announce: match by spell id (verified)
+
+The chat announce matches the soulstone cast by **spell id** (locale-proof), with
+the localized name as a fallback. Both reviewers confirmed (high confidence):
+
+- TBC Soulstone Resurrection rank ids: **20707, 20762, 20763, 20764, 20765, 27239**.
+- `CombatLogGetCurrentEventInfo()` returns `spellId` as the **12th** value, then
+  `spellName` (13th), `spellSchool` (14th) for `SPELL_AURA_APPLIED` in 2.5.
+- Match `ns.soulstoneIDset[spellId]` first, then `spellName == ns.soulstoneBuffName`
+  (covers the rare build that leaves `spellId` nil on a subevent). A non-soulstone
+  id/name simply won't match — no false announce.
+
+The soulstone *tracker* (party buff scan) still matches by name and is correct —
+the living-player buff is "Soulstone Resurrection" (verified round 6 vs Wowhead).
+
 ## 7. APIs we deliberately AVOID (retail/Wrath traps)
 
 - `C_UnitAuras.*` / `AuraUtil.*` — retail only, **do not exist** in 2.5.

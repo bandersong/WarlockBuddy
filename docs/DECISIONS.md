@@ -7,8 +7,11 @@ here so the next run has continuity.
 ## Next pick (queued)
 
 Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run):
-- **1.0 visual polish** (both reviewers #3) — consistent fonts/sizes/tooltip
-  wording/spacing across the 13 frames so it reads "pro UI", not "cluttered".
+- **/wb status diagnostic** (both reviewers #2) — list each module's enabled +
+  OnInit-ran state, so a clean load is verifiable when she finally tests in-game.
+- **Hover tooltips on frames** — only viable in UNLOCKED/config mode (locked frames
+  must stay EnableMouse(false) or they block world clicks; both reviewers agree).
+- **1.0 visual polish** (both reviewers #3) — consistent fonts/sizes across frames.
 - **In-game test pass** — biggest remaining unknown: nothing has run in WoW yet.
   When possible, load it on a real warlock and fix what actually breaks before
   calling it 1.0.
@@ -25,6 +28,18 @@ Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run)
   mirroring the Healthstone module.
 
 ## Log
+
+### 2026-06-27 — v0.9.3: locale-proof soulstone announce
+- **Triangulation: clean agreement.** Both ranked this #1 of the code-verifiable
+  options (GLM B#1; Codex B>C>A>D). Both independently confirmed the exact rank ids
+  (20707, 20762-20765, 27239) and that CLEU `spellId` is the 12th return in 2.5 —
+  two independent sources agreeing = solid ground truth (not trusting GLM's "100%"
+  alone, given the Life Tap contamination history). Codex even described the exact
+  edit I'd make.
+- **Shipped:** announce matches `ns.soulstoneIDset[spellId]` first, name fallback
+  second. Non-regressive (name path preserved), now works on any-locale client.
+- Tooltips deferred: both said only do them in unlocked/config mode (locked frames
+  must stay click-through). Queued.
 
 ### 2026-06-27 — v0.9.2: onboarding (welcome + /wb help)
 - **Triangulation:** strong consensus — both ranked the first-run welcome and

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.3 — locale-proof soulstone announce
+- The "Soulstone on X" chat announce now matches the cast by **spell id**
+  (20707 / 20762-20765 / 27239) first, falling back to the localized name. Before,
+  it matched the localized buff name only, which would silently fail on a
+  non-English client. Captures `spellId` (12th CLEU return) + keeps the name
+  fallback for safety.
+
 ## 0.9.2 — onboarding: welcome message + /wb help
 - **One-time welcome** on first login: explains the minimap button, `/wb`, how to
   move frames, and `/wb resetpos` — so a new player isn't staring at a "weird icon"

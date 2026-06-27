@@ -91,7 +91,15 @@ ns.petAbilityID = {
 ns.petAbilityOrder = { "SpellLock", "Seduction", "DevourMagic", "Intercept", "Sacrifice", "Suffering" }
 
 -- Buff names that mean "I currently have a soulstone resurrection up"
-ns.soulstoneBuffID = 20707  -- Soulstone Resurrection
+ns.soulstoneBuffID = 20707  -- Soulstone Resurrection (rank 1; used to resolve name)
+
+-- All TBC Soulstone Resurrection rank ids, as a set, for a localization-proof
+-- combat-log match on the announce (we still keep a name fallback). Matching by
+-- id means the announce works on any-locale client, not just English.
+ns.soulstoneIDset = {
+    [20707] = true, [20762] = true, [20763] = true,
+    [20764] = true, [20765] = true, [27239] = true,
+}
 
 -- Resolved name caches (filled by BuildSpellNames)
 ns.spellName = {}     -- key -> localized name

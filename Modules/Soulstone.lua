@@ -71,10 +71,14 @@ end
 -- Announce when the player successfully casts Create/Soulstone resurrection.
 function M:COMBAT_LOG_EVENT_UNFILTERED()
     if not ns.db.soulstone.announce then return end
-    local _, subevent, _, srcGUID, _, _, _, _, dstName, _, _, _, spellName =
+    local _, subevent, _, srcGUID, _, _, _, _, dstName, _, _, spellId, spellName =
         CombatLogGetCurrentEventInfo()
     if subevent == "SPELL_RESURRECT" or subevent == "SPELL_AURA_APPLIED" then
-        if srcGUID == UnitGUID("player") and spellName == ns.soulstoneBuffName and dstName then
+        -- Match by spell id (locale-proof) OR the resolved name (fallback in case
+        -- a build leaves spellId nil on this subevent).
+        local isSoulstone = (spellId and ns.soulstoneIDset[spellId])
+            or (spellName and spellName == ns.soulstoneBuffName)
+        if srcGUID == UnitGUID("player") and isSoulstone and dstName then
             local chan = ns.db.soulstone.channel or "SAY"
             if chan == "SAY" and IsInGroup and IsInGroup() then chan = "PARTY" end
             SendChatMessage("Soulstone on " .. dstName .. " (battle rez ready)", chan)
