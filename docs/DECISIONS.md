@@ -7,17 +7,39 @@ here so the next run has continuity.
 ## Next pick (queued)
 
 Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run):
-- **Curse assignment / raid curse monitor** (Codex #2) — show your assigned curse,
-  warn if it drops or conflicts with another lock's.
-- **Soulstone announce is brittle** (both reviewers) — the CLEU match may miss real
-  soulstone applications. Verify the exact 2.5 subevent/payload for a soulstone
-  apply against ground truth, then key off it (or off the item spell id).
+- **Ritual of Summoning helper** (Codex's #1, GLM #3) — secure cast button + party
+  announce ("summoning X, click the portal"). Frequent dungeon friction; the
+  secure-button pattern is already proven by the Healthstone module.
+- **Drain channel helper** (Codex #2) — tick/clip timer for Drain Life/Drain Soul.
+- **Soulstone announce: match by spell id, not name** — codex (0.92) says use the
+  rank ids {20707,20762,20763,20764,20765,27239} instead of the localized name in
+  the CLEU match (name only as fallback). Small robustness fix; tracker itself is
+  already correct (see log).
+- **Curse assignment / raid curse monitor** — raid-niche; lower priority for a
+  general/leveling player.
 - **Ritual of Souls / Summoning helper** — secure button (same pattern as the
   Healthstone button now proven) for Ritual of Souls / Summon out of combat.
 - **Soulstone emergency button** — secure `/use` button for the soulstone item,
   mirroring the Healthstone module.
 
 ## Log
+
+### 2026-06-27 — v0.6.0: options sliders for thresholds
+- **Q1 (next pick) — reviewers split:** GLM ranked options sliders #1 (leveling
+  thresholds matter); Codex ranked Ritual of Summoning #1 and sliders #3 ("useful
+  polish" but less of a warlock feature). Both agreed sliders are useful and both
+  ranked Demonic Sacrifice last. Chose sliders this round: zero game-fact risk,
+  genuinely useful across the 1-70 range, and complete-able cleanly. Ritual of
+  Summoning is now the queued #1 (Codex's top).
+- **Q2 — GLM hallucination, caught by triangulation + ground truth.** GLM claimed
+  the soulstone buff on a LIVING player is named after the item ("Master
+  Soulstone"), which would mean our Soulstone TRACKER (matches "Soulstone
+  Resurrection") was broken. Codex, citing Wowhead TBC (spell 20707/27239),
+  confirmed the applied buff IS "Soulstone Resurrection" — so the tracker is
+  correct and GLM was wrong. No change made to the tracker. Codex did flag a real
+  minor upgrade: match the announce by spell id, not localized name — queued.
+- **Shipped:** Options.lua sliders (shard low/full, execute %, life-tap mana %,
+  safe-HP %), with a reusable makeSlider helper. Shard sliders refresh live.
 
 ### 2026-06-27 — v0.5.1: correctness hardening (audit triage)
 - Ran a full-source bug audit through GLM-5.2 + Codex (the addon has never run

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.6.0 — tunable thresholds (options sliders)
+- The options panel (`/wb`) now has a **Thresholds** column with sliders, so you
+  can tune the numbers from the UI instead of editing saved vars:
+  - Shards: warn-low count, warn-full count
+  - Drain Soul: target-HP % that triggers the execute alert
+  - Life Tap: mana-% that shows the cue, and the safe-HP-% for the green light
+- Why: hardcoded cutoffs are wrong across the 1-70 leveling range (a 30%-mana
+  warning that's fine at 70 is useless at 40). Shard sliders refresh the counter
+  live as you drag.
+
 ## 0.5.1 — correctness hardening (audit fixes)
 Bug-fix pass from a full-source audit (GLM-5.2 + Codex). The important one:
 - **Healthstone button was unusable by default.** It's unlocked on a fresh install,
