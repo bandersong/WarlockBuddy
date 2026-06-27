@@ -2,8 +2,12 @@
 
 ## 1. Get the files
 
-Either download the repo as a ZIP (green **Code** button → Download ZIP on
-GitHub) or `git clone` it.
+**Easiest:** grab the latest **`WarlockBuddy-vX.Y.Z.zip`** from the
+[Releases page](https://github.com/bandersong/WarlockBuddy/releases) — it unzips
+straight to a `WarlockBuddy` folder, ready to drop in (step 3).
+
+(Alternatively, the green **Code → Download ZIP** button works too, but it names
+the folder `WarlockBuddy-main` — you'll need to rename it to `WarlockBuddy`.)
 
 ## 2. Find your AddOns folder
 

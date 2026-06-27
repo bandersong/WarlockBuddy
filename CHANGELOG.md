@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.7 — first downloadable release + packaging
+- Cut the **first proper release**: a clean `WarlockBuddy-v0.9.7.zip` whose top
+  folder is exactly `WarlockBuddy/`, so it extracts straight into
+  `Interface/AddOns` with no renaming (GitHub's auto "Source code" zip nests the
+  folder and breaks drag-drop for non-technical users).
+- `.toc` metadata polish: colored title, `X-Website`, `X-Category: Class`,
+  `X-License: MIT`. No behavior change.
+
 ## 0.9.6 — DoT-expiry refresh warning
 - A tracked DoT/curse bar now **pulses** when it's about to fall off (default: the
   last 3 seconds), so you can refresh before losing uptime — the core of warlock
