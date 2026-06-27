@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.0 — Pet utility cooldown tracker
+- **New module: PetCD** — ready/cooldown bars for the current pet's key utility
+  abilities: **Spell Lock** (Felhunter interrupt), **Seduction** (Succubus CC),
+  **Devour Magic**, **Sacrifice**, **Intercept** (Felguard), **Suffering**. Bars
+  go green "READY" or count down amber while on cooldown. This was the #1 next
+  feature in both AI reviews — TBC has no native pet-cooldown readout.
+- Abilities are matched **by name** across the 10 pet action slots (not by
+  hardcoded slot numbers, which aren't stable) and resolved from spell ids in
+  Data.lua, so it's locale-safe and works regardless of bar arrangement.
+- Uses confirmed-present events `PET_BAR_UPDATE` / `PET_BAR_UPDATE_COOLDOWN` /
+  `UNIT_PET`; deliberately avoids `PLAYER_PET_CHANGED` (Codex flagged it
+  unreliable in 2.5).
+
 ## 0.2.0 — Drain Soul execute alert
 - **New module: Execute** — watches the target's health and throws a big
   "DRAIN SOUL" cue (icon + screen flash + sound) when it drops into shard-farming

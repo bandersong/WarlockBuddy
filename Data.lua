@@ -66,6 +66,19 @@ ns.itemID = {
     Firestones   = { 13699, 13700, 13701, 22127 },
 }
 
+-- Pet utility abilities worth a cooldown readout. We MATCH BY NAME against the
+-- pet action bar (not by hardcoded slot - slot order isn't stable), so we only
+-- need ids here to resolve the localized names once at login.
+ns.petAbilityID = {
+    SpellLock   = 19244,   -- Felhunter: interrupt + dispel-lock
+    DevourMagic = 19505,   -- Felhunter: dispel + heal
+    Seduction   = 6358,    -- Succubus: CC
+    Sacrifice   = 7812,    -- Voidwalker: damage shield
+    Intercept   = 30151,   -- Felguard (Demo): gap close + stun
+    Suffering   = 17735,   -- Voidwalker: taunt (tank pet)
+}
+ns.petAbilityOrder = { "SpellLock", "Seduction", "DevourMagic", "Intercept", "Sacrifice", "Suffering" }
+
 -- Buff names that mean "I currently have a soulstone resurrection up"
 ns.soulstoneBuffID = 20707  -- Soulstone Resurrection
 
@@ -98,6 +111,13 @@ function ns:BuildSpellNames()
 
     local ssName = GetSpellInfo(ns.soulstoneBuffID)
     if ssName then ns.soulstoneBuffName = ssName end
+
+    -- Resolve pet ability names -> key, for matching against the pet action bar.
+    ns.petAbilityNameToKey = {}
+    for key, id in pairs(ns.petAbilityID) do
+        local n = GetSpellInfo(id)
+        if n then ns.petAbilityNameToKey[n] = key end
+    end
 end
 
 -- Ordered groups for the DoT tracker (so bars render in a sensible order).

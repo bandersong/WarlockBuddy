@@ -88,6 +88,28 @@ integer) — so an optional efficiency filter is `if powerToken ~= "MANA" then
 return end`. Our Pet module just filters `unit == "pet"`, which is correct
 regardless. (Triangulated: Codex correct on the string token; GLM had said int.)
 
+## 6c. Pet action bar (cooldown tracker) — verified
+
+For pet ability cooldowns (Spell Lock, Seduction, Devour Magic, Sacrifice,
+Intercept), use the **pet action bar**, not the combat log — those abilities sit
+on the bar and expose cooldowns directly (both reviewers, high confidence).
+
+- `NUM_PET_ACTION_SLOTS == 10`. Scan slots 1–10.
+- `GetPetActionInfo(slot)` →
+  `name, subtext, texture, isToken, isActive, autoCastAllowed, autoCastEnabled`.
+  Real castable abilities have `isToken == false`; the generic Attack / Follow /
+  Stay / Move buttons are tokens (skip them). `name == nil` ⇒ empty slot.
+- `GetPetActionCooldown(slot)` → `start, duration, enable`. On cooldown when
+  `start > 0 and duration > 1.5` (the `>1.5` filters the GCD).
+- **Match abilities by NAME, not slot index.** Slot order isn't stable across
+  pets/builds; we resolve our target names from spell ids (`ns.petAbilityID`) and
+  match the live bar against them.
+- Events: `PET_BAR_UPDATE` (rebuild names/icons) and `PET_BAR_UPDATE_COOLDOWN`
+  (refresh timers) both exist and are reliable. `UNIT_PET` (arg1 `"player"`)
+  catches summon/dismiss. **`PLAYER_PET_CHANGED` — avoid**: Codex flagged it
+  unreliable in 2.5 (GLM disagreed); we don't register it, so the disagreement is
+  moot and there's no "unknown event" risk.
+
 ## 7. APIs we deliberately AVOID (retail/Wrath traps)
 
 - `C_UnitAuras.*` / `AuraUtil.*` — retail only, **do not exist** in 2.5.

@@ -46,6 +46,7 @@ ns.defaults = {
         Reminders = true,
         CC = true,
         Execute = true,
+        PetCD = true,
     },
     shards = {
         warnLow = 3,           -- turn red at/below this
@@ -90,6 +91,10 @@ ns.defaults = {
         sound = true,
         scale = 1.0,
         point = { "CENTER", 0, -120 },
+    },
+    petcd = {
+        scale = 1.0,
+        point = { "CENTER", -260, -220 },
     },
 }
 

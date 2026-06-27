@@ -51,6 +51,7 @@ function ns:BuildOptions()
         { "Reminders", "Armor / weapon-stone nags" },
         { "CC",        "Banish / Fear / Seduce timers" },
         { "Execute",   "Drain Soul shard-on-kill alert" },
+        { "PetCD",     "Pet ability cooldowns (Spell Lock / Seduce)" },
     }
     for _, m in ipairs(mods) do
         local key = m[1]

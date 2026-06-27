@@ -6,19 +6,29 @@ here so the next run has continuity.
 
 ## Next pick (queued)
 
-**Pet utility cooldown tracker.** Both GLM-5.2 and Codex independently ranked this
-#1 (Spell Lock / Seduction / Sacrifice / Devour Magic / Intercept availability).
-High value across PvE *and* PvP — TBC has no clean native display of pet ability
-cooldowns.
-
-> BEFORE building it, verify in 2.5: the exact return signature of
-> `GetPetActionInfo(slot)` (name/subtext/texture/isToken/isActive/autoCast... —
-> order has shifted between builds) and `GetPetActionCooldown(slot)` (start,
-> duration, enable). Scan `NUM_PET_ACTION_SLOTS` (10) slots; resolve token names
-> via `_G[name]` when `isToken`. Don't assume — confirm with a targeted
-> glm-ask + codex pass first, then build.
+Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run):
+- **Curse assignment / raid curse monitor** (Codex #2) — show your assigned curse,
+  warn if it drops or conflicts with another lock's.
+- **Life Tap safety helper** (Codex #3) — cue to tap when mana low *and* health is
+  safe, so she doesn't tap herself to death.
+- **Healthstone emergency button** — secure action button (`/use Healthstone`);
+  verify SecureActionButtonTemplate + macrotext taint rules in 2.5 first.
+- **Ritual of Souls / Summoning helper** — one-click summon assist out of combat.
 
 ## Log
+
+### 2026-06-27 — v0.3.0: Pet utility cooldown tracker (the queued #1)
+- **Triangulation:** verified the pet-action API before building (as the prior
+  note demanded). Both AIs confirmed `GetPetActionInfo` return order,
+  `GetPetActionCooldown` = start/duration/enable, `NUM_PET_ACTION_SLOTS = 10`, and
+  that Spell Lock/Seduction live on the pet bar (no combat log needed).
+  - **Disagreement:** GLM hardcoded ability→slot maps and used
+    `PLAYER_PET_CHANGED`; Codex said slot order isn't reliable to assume and to
+    avoid `PLAYER_PET_CHANGED` in 2.5. Resolved toward Codex: match **by name**
+    across all 10 slots, and use `PET_BAR_UPDATE`/`PET_BAR_UPDATE_COOLDOWN`/
+    `UNIT_PET` only. Robust to both views + dodges the unknown-event risk.
+- **Shipped:** Modules/PetCD.lua — green READY / amber countdown bars for the
+  current pet's utility abilities. Matched by name, locale-safe, spec-agnostic.
 
 ### 2026-06-27 — v0.2.0: Drain Soul execute alert
 - **Triangulation:** asked GLM + Codex to (1) verify Pet module event correctness
