@@ -1,0 +1,4 @@
+# Keep release archives (git archive / packagers) free of dev-only files.
+tests/        export-ignore
+.gitignore    export-ignore
+.gitattributes export-ignore

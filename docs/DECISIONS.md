@@ -31,6 +31,23 @@ IN-GAME TEST PASS, not more features** — and that can't be done from this mach
 
 ## Log
 
+### 2026-06-27 — headless smoke-test harness (dev)
+- The addon's one real remaining risk is "never run in-game." Rather than churn
+  features, built the closest offline substitute: `tests/headless.lua` stubs the
+  WoW API (mock frames with real script/event storage + a metatable no-op for
+  everything else; numeric methods return sane numbers so arithmetic survives),
+  loads all files with the shared `(ADDON, ns)` vararg, fires the lifecycle through
+  the addon's real event frame, and checks each module's recorded `_err`.
+- **Result: PASS** — 13 modules init, 11 events + 6 slash commands run with zero
+  errors. No bugs found, but the load/init/event path is now verified offline.
+- **Triangulation:** GLM-5.2 + Codex both endorsed this as the highest-value
+  offline step (high confidence it catches startup/nil/vararg/handler crashes;
+  low confidence on deep gameplay-correctness — that still needs in-game). Codex
+  suggested pairing with a TESTING.md behavior checklist (queued).
+- Gotchas they flagged and I applied: Lua 5.1 `unpack` (local fallback to
+  table.unpack since I run under 5.5); feed each file the same `ns`; metatable
+  no-op returning self for chaining; pcall each file/event, report all not first.
+
 ### 2026-06-27 — v0.9.7: first downloadable release + packaging
 - Feature set is complete, so this round shipped DELIVERY, not churn: cut the first
   GitHub release (tag v0.9.7) with a hand-built `WarlockBuddy-v0.9.7.zip` whose top

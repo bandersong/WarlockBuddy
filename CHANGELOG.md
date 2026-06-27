@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased (dev)
+- **Headless smoke test** (`tests/headless.lua`): stubs the WoW API, loads every
+  file in `.toc` order, runs every module's `OnInit`, and fires the main events +
+  slash commands — catching runtime errors that `luac -p` can't, without needing
+  WoW. Currently passes clean (13 modules init, no errors). Reusable gate for
+  every future change. `.gitattributes` keeps it (and other dev files) out of
+  release zips. No change to the shipped addon.
+
 ## 0.9.7 — first downloadable release + packaging
 - Cut the **first proper release**: a clean `WarlockBuddy-v0.9.7.zip` whose top
   folder is exactly `WarlockBuddy/`, so it extracts straight into

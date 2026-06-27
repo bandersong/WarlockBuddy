@@ -57,6 +57,20 @@ retail or Wrath. The design decisions and API gotchas (why we match auras by
 name, the player-cast duration quirk, the disputed Shadow Trance id, etc.) are
 documented in [docs/TBC_API_NOTES.md](docs/TBC_API_NOTES.md).
 
+## Development
+
+Two checks gate every change (no WoW needed):
+
+```sh
+for f in *.lua Modules/*.lua; do luac -p "$f"; done   # syntax
+lua tests/headless.lua                                  # load/init smoke test
+```
+
+`tests/headless.lua` stubs the WoW API, loads every file in `.toc` order, fires
+`ADDON_LOADED`/`PLAYER_LOGIN` (running every module's `OnInit`), and exercises the
+events and slash commands — catching runtime errors that a syntax check can't.
+Exit 0 = clean. (Dev-only; excluded from release zips via `.gitattributes`.)
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
