@@ -31,6 +31,20 @@ IN-GAME TEST PASS, not more features** — and that can't be done from this mach
 
 ## Log
 
+### 2026-06-27 — v0.9.7: first downloadable release + packaging
+- Feature set is complete, so this round shipped DELIVERY, not churn: cut the first
+  GitHub release (tag v0.9.7) with a hand-built `WarlockBuddy-v0.9.7.zip` whose top
+  folder is exactly `WarlockBuddy/` (verified via `unzip -l`: toc present, no
+  double-nest, no .git dir). Built with `git archive --prefix=WarlockBuddy/`.
+  Polished .toc metadata (colored title, X-Website/Category/License). INSTALL.md
+  points at Releases first.
+- **Triangulation:** GLM-5.2 + Codex both confirmed the zip structure, that `X-`
+  toc fields are safely ignored if unknown in 2.5, colored `## Title` works, and
+  `.pkgmeta` is irrelevant to a manual zip — codex even gave the `unzip -l`
+  verification step, which I ran.
+- Still NOT 1.0: the in-game test on a real warlock remains the gate (needs a WoW
+  install). The release just makes that test trivial to set up.
+
 ### 2026-06-27 — v0.9.6: DoT-expiry refresh warning (last feature)
 - **Triangulation: both said we're at diminishing returns.** #1 pick from both =
   "it's done, the real gap is in-game testing" (can't do here). #2 from both = A,
