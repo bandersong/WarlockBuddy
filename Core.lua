@@ -69,6 +69,8 @@ ns.defaults = {
         max = 8,
         point = { "CENTER", 280, 40 },       -- right
         showCurses = true,
+        warnAt = 3,            -- pulse a DoT bar when this many seconds remain (0=off)
+        warnSound = false,     -- also play a sound on the expiry warning
     },
     procs = {
         flash = true,

@@ -88,7 +88,10 @@ end
 
 function M:UpdateTimers()
     if not self.active or #self.active == 0 then return end
+    local cfg = ns.db.dots
+    local warnAt = cfg.warnAt or 3            -- seconds; 0 disables the warning
     local now = GetTime()
+    self.warned = self.warned or {}
     for i, a in ipairs(self.active) do
         local bar = self.bars[i]
         if bar and bar:IsShown() then
@@ -101,6 +104,20 @@ function M:UpdateTimers()
             bar:SetValue(frac)
             ns:ColorByRemaining(bar, frac)
             bar.timeText:SetText(ns:FmtTime(remaining))
+
+            -- "About to expire" cue: pulse the bar and (once) play a sound, so a
+            -- DoT can be refreshed before it falls off. Keyed by spell name so it
+            -- survives the frequent Rebuilds and fires once per expiry cycle.
+            if warnAt > 0 and remaining <= warnAt then
+                bar:SetAlpha(0.45 + 0.55 * math.abs(math.sin(now * 5)))
+                if not self.warned[a.name] then
+                    self.warned[a.name] = true
+                    if cfg.warnSound then ns:PlayAlertSound() end
+                end
+            else
+                bar:SetAlpha(1)
+                self.warned[a.name] = nil   -- refreshed: re-arm for next cycle
+            end
         end
     end
 end

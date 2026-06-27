@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.9.6 — DoT-expiry refresh warning
+- A tracked DoT/curse bar now **pulses** when it's about to fall off (default: the
+  last 3 seconds), so you can refresh before losing uptime — the core of warlock
+  damage. Optional **sound** too (off by default, so it never nags when you're
+  letting a DoT drop on purpose).
+- Both tunable in `/wb`: "DoT expiry warn (sec, 0=off)" slider + a sound checkbox.
+- Conservative by design (warns "about to expire", ~2.5-4s is the recommended
+  range), and only ever warns on YOUR dots (player-cast), auto-clearing when the
+  target dies or the dot is refreshed.
+
 ## 0.9.5 — config-mode frame tooltips
 - When you **unlock** frames (`/wb unlock`), hovering any WarlockBuddy frame now
   shows a tooltip naming it and explaining what it is ("DoTs — Your DoT & curse

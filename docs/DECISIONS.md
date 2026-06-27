@@ -6,12 +6,15 @@ here so the next run has continuity.
 
 ## Next pick (queued)
 
-Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run):
-- **1.0 visual polish** — consistent fonts/sizes/bar textures across frames.
-- **In-game test pass** — THE remaining 1.0 gate; nothing has run in WoW yet.
-  Feature set + onboarding + diagnostics are now in place to make that test
-  productive (`/wb status` surfaces load errors).
-- **In-game test pass** — biggest remaining unknown: nothing has run in WoW yet.
+**The feature set is complete. Both reviewers now say the #1 remaining gap is an
+IN-GAME TEST PASS, not more features** — and that can't be done from this machine
+(no WoW install). Until someone loads it on a real TBC warlock:
+- Remaining buildable items are polish only (consistent fonts/bar textures), with
+  real diminishing returns. Don't add gameplay modules just to keep the loop busy.
+- When in-game testing is possible: load on a warlock, run `/wb status`, fix any
+  reported module errors, then verify each module's behavior and call it 1.0.
+- Lower-value optional features if ever wanted: Demonic Sacrifice tracker (deep
+  Demo only), Soulstone self-use button.
   When possible, load it on a real warlock and fix what actually breaks before
   calling it 1.0.
 - **Drain channel helper** (Codex #2 earlier) — tick/clip timer for Drain Life/Soul.
@@ -27,6 +30,19 @@ Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run)
   mirroring the Healthstone module.
 
 ## Log
+
+### 2026-06-27 — v0.9.6: DoT-expiry refresh warning (last feature)
+- **Triangulation: both said we're at diminishing returns.** #1 pick from both =
+  "it's done, the real gap is in-game testing" (can't do here). #2 from both = A,
+  the DoT-expiry warning, the strongest remaining buildable gameplay win (warlock
+  DPS = DoT uptime). Built A with their shared guidance: warn ~2.5-4s out (default
+  3, slider), player-cast only (already), suppress on dead/expired (already), sound
+  conservative/off-by-default (avoid nagging intentional Immolate drops).
+- **Shipped:** Dots bars pulse + optional sound when a tracked dot is within
+  warnAt seconds of expiring; keyed by spell name so it fires once per cycle and
+  survives rebuilds; slider + sound checkbox in options.
+- **Calling the feature set complete.** Further loop runs should be polish or stop
+  until in-game testing is possible — noted in Next pick.
 
 ### 2026-06-27 — v0.9.5: config-mode frame tooltips
 - **Triangulation: clean agreement.** Both confirmed GameTooltip

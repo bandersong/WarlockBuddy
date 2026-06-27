@@ -169,6 +169,16 @@ function ns:BuildOptions()
         function(v) ns.db.lifetap.safeHpAbove = v end)
     ry = ry - 54
 
+    makeSlider(panel, "DotWarn", "DoT expiry warn (sec, 0=off)", rx, ry, 0, 6, 1, false,
+        function() return ns.db.dots.warnAt end,
+        function(v) ns.db.dots.warnAt = v end)
+    ry = ry - 50
+
+    makeCheck(panel, "Play sound on DoT expiry warning", rx, ry,
+        function() return ns.db.dots.warnSound end,
+        function(v) ns.db.dots.warnSound = v and true or false end)
+    ry = ry - 30
+
     -- Register with the Interface options frame (TBC API).
     if InterfaceOptions_AddCategory then
         InterfaceOptions_AddCategory(panel)
