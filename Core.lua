@@ -189,7 +189,9 @@ function ns:Init()
         -- module shouldn't create frames / register events / secure buttons.
         if ns:ModuleEnabled(name) and m.OnInit then
             local ok, err = pcall(m.OnInit, m)
+            m._loaded = ok           -- recorded for /wb status
             if not ok then
+                m._err = err
                 ns:Print("|cffff5555module " .. name .. " failed:|r " .. tostring(err))
             end
         end
@@ -212,12 +214,37 @@ function ns:ShowWelcome()
     ns:Print("Stuck? |cffcc99ff/wb resetpos|r restores the layout. Full list: |cffcc99ff/wb help|r.")
 end
 
+-- Load diagnostic. Since the addon can't always be tested by the author in-game,
+-- /wb status turns a user's first login into a usable bug report: it shows the
+-- version and, per module, whether it's off / loaded ok / errored (with the error).
+-- (We don't show frame shown/hidden state: alert frames like Procs/Execute are
+-- hidden by default, so "hidden" would read as broken when it's normal.)
+function ns:ShowStatus()
+    local ver = (GetAddOnMetadata and GetAddOnMetadata(ADDON, "Version")) or "?"
+    ns:Print("status - |cffffffffv" .. ver .. "|r")
+    for _, name in ipairs(moduleOrder) do
+        local m = ns.modules[name]
+        local line
+        if not ns:ModuleEnabled(name) then
+            line = "|cff888888" .. name .. ": off|r"
+        elseif m._loaded then
+            line = "|cff55ff55" .. name .. ": ok|r"
+        elseif m._err then
+            line = "|cffff5555" .. name .. ": ERROR|r " .. tostring(m._err)
+        else
+            line = "|cffffaa00" .. name .. ": not loaded|r"
+        end
+        ns:Print("  " .. line)
+    end
+end
+
 -- Command reference (also the recovery path after the welcome scrolls away).
 function ns:ShowHelp()
     ns:Print("commands:")
     ns:Print("  |cffcc99ff/wb|r - open options")
     ns:Print("  |cffcc99ff/wb unlock|r / |cffcc99fflock|r - move frames (drag while unlocked)")
     ns:Print("  |cffcc99ff/wb resetpos|r - restore the default frame layout")
+    ns:Print("  |cffcc99ff/wb status|r - show version + which modules loaded")
     ns:Print("  |cffcc99ff/wb reset|r - reset ALL settings (then /reload)")
     ns:Print("  minimap button: |cffffffffleft|r=options |cffffffffright|r=lock/unlock |cffffffffdrag|r=move")
 end
@@ -260,6 +287,8 @@ local function SlashCmdHandler(msg)
         ns:Print("frame positions restored to the default layout.")
     elseif msg == "help" then
         ns:ShowHelp()
+    elseif msg == "status" then
+        ns:ShowStatus()
     elseif msg == "reset" then
         WarlockBuddyDB = {}
         ns:Print("settings reset. /reload to apply.")

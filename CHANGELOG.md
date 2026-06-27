@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.4 — /wb status diagnostic
+- **`/wb status`** prints the version and, per module, whether it's off / loaded ok
+  / errored (with the error text). Each module's `OnInit` is already wrapped in a
+  `pcall`, so a single broken module can't take down the rest — and now you can
+  see exactly which one and why. Makes a user's first login a usable bug report
+  (helpful since the author can't always test in-game).
+
 ## 0.9.3 — locale-proof soulstone announce
 - The "Soulstone on X" chat announce now matches the cast by **spell id**
   (20707 / 20762-20765 / 27239) first, falling back to the localized name. Before,

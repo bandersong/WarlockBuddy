@@ -7,8 +7,6 @@ here so the next run has continuity.
 ## Next pick (queued)
 
 Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run):
-- **/wb status diagnostic** (both reviewers #2) — list each module's enabled +
-  OnInit-ran state, so a clean load is verifiable when she finally tests in-game.
 - **Hover tooltips on frames** — only viable in UNLOCKED/config mode (locked frames
   must stay EnableMouse(false) or they block world clicks; both reviewers agree).
 - **1.0 visual polish** (both reviewers #3) — consistent fonts/sizes across frames.
@@ -28,6 +26,21 @@ Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run)
   mirroring the Healthstone module.
 
 ## Log
+
+### 2026-06-27 — v0.9.4: /wb status diagnostic
+- **Triangulation:** Codex (high) ranked /wb status the highest-value low-risk
+  step; GLM flip-flopped to "tooltips first" (it ranked status higher last round).
+  Picked status: most pragmatic given the author can't test in-game — it turns a
+  user's first login into a usable bug report. Both gave the same chat gotcha
+  (per-line AddMessage, balance |r; local AddMessage isn't chat-throttled).
+- **Split resolved:** Codex wanted per-frame shown/hidden in the output; GLM said
+  skip. Sided with GLM — alert frames (Procs/Execute) are hidden by default, so
+  "hidden" would read as broken. Status shows only off / ok / ERROR per module.
+- Also disregarded GLM's recurring (wrong) blind-spot claims this round ("no
+  C_Timer in TBC", "TBC uses CHAT_MSG_COMBAT string parsing not CLEU") - those are
+  original-2007-TBC facts; TBC *Classic* 2.5 has both, confirmed earlier by Codex.
+- **Shipped:** ns:ShowStatus + `/wb status` (+ help entry); Init records
+  m._loaded/m._err per module.
 
 ### 2026-06-27 — v0.9.3: locale-proof soulstone announce
 - **Triangulation: clean agreement.** Both ranked this #1 of the code-verifiable
