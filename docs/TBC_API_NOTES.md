@@ -232,7 +232,16 @@ raids, and **decided against it** — investigated, not an oversight:
   the *union* of every module's units, then re-filter in Lua.
 
 If WarlockBuddy ever targets serious raiding, revisit: confirm `RegisterUnitEvent`
-on a live 2.5 client first, then register the per-event unit union on the frame.
+on a live 2.5 client first with —
+
+```
+/dump type(CreateFrame("Frame").RegisterUnitEvent)   -- "function" = exists, "nil" = not
+```
+
+— then register the per-event unit **union** across all modules on the frame (and
+keep the per-module `if unit ==` filter). Both reviewers independently reached the
+same verdict: don't refactor for 5-man/leveling (Codex high confidence); only
+worth it for 25-man, and only after that `/dump` confirms the API.
 
 ## 8. .toc Interface version
 
