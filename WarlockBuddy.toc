@@ -1,0 +1,23 @@
+## Interface: 20504
+## Title: WarlockBuddy
+## Notes: Everything a TBC Classic warlock needs - shards, DoT timers, procs, pet, CC, soulstone & reminders.
+## Author: bandersong
+## Version: 0.1.0
+## SavedVariables: WarlockBuddyDB
+## DefaultState: enabled
+## IconTexture: Interface\Icons\Spell_Shadow_DeathCoil
+
+# Load order matters: core + data + util first, then modules.
+Core.lua
+Data.lua
+Util.lua
+
+Modules\Shards.lua
+Modules\Dots.lua
+Modules\Procs.lua
+Modules\Pet.lua
+Modules\Soulstone.lua
+Modules\Reminders.lua
+Modules\CC.lua
+
+Options.lua
