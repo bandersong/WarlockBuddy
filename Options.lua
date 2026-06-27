@@ -98,6 +98,7 @@ function ns:BuildOptions()
         { "Healthstone", "One-click Healthstone panic button" },
         { "LifeTap",   "Life Tap safety cue (mana low / HP safe)" },
         { "Summon",    "Ritual of Summoning buttons + announce" },
+        { "MinimapButton", "Minimap button (opens options) - /reload to toggle" },
     }
     for _, m in ipairs(mods) do
         local key = m[1]

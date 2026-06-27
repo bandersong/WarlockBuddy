@@ -176,6 +176,21 @@ model's numbers.
   global `SendChatMessage(msg, "PARTY"/"RAID")` — NOT `C_ChatInfo.SendChatMessage`
   (that's the retail form; GLM suggested it, it's wrong for 2.5).
 
+## 6g. Minimap button + math.atan2 (verified)
+
+Self-contained minimap button (no LibDBIcon): `CreateFrame("Button", name,
+Minimap)`, 31x31, `SetFrameLevel(Minimap:GetFrameLevel() + 8)`, a ~20x20 icon and
+the `Interface\Minimap\MiniMap-TrackingBorder` overlay (~53x53, anchored TOPLEFT).
+Place on the ring at angle A: `x = cos(rad)*r, y = sin(rad)*r` from Minimap CENTER,
+`r ≈ 80` (we use `Minimap:GetWidth()/2 + 5`). Drag: in an OnUpdate, read
+`GetCursorPosition()`, divide by `UIParent:GetEffectiveScale()`, take
+`atan2(cy - my, cx - mx)` against `Minimap:GetCenter()`.
+
+**math.atan2:** WoW runs **Lua 5.1, which has `math.atan2(y, x)`**. The 2-arg form
+of `math.atan(y, x)` is Lua 5.3+ only. Use `math.atan2` (with a 2-arg `math.atan`
+fallback for safety). GLM said the opposite (use `math.atan` not `atan2`) — wrong;
+Codex confirmed `math.atan2`.
+
 ## 7. APIs we deliberately AVOID (retail/Wrath traps)
 
 - `C_UnitAuras.*` / `AuraUtil.*` — retail only, **do not exist** in 2.5.

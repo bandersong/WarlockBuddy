@@ -7,9 +7,6 @@ here so the next run has continuity.
 ## Next pick (queued)
 
 Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run):
-- **Minimap button for discoverability** (both reviewers' #2) — a non-expert won't
-  remember `/wb`; a visible minimap/LDB button to open options is the clear next
-  usability win.
 - **First-run "Beginner" preset** (Codex #3) — start with fewer modules on + plain
   tooltips to cut overwhelm.
 - **Drain channel helper** (Codex #2 earlier) — tick/clip timer for Drain Life/Soul.
@@ -25,6 +22,18 @@ Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run)
   mirroring the Healthstone module.
 
 ## Log
+
+### 2026-06-27 — v0.9.0: self-contained minimap button
+- **Triangulation:** both confirmed the ring math, frame setup, drag (cursor /
+  UIParent:GetEffectiveScale, atan2 vs Minimap center), parent-to-Minimap.
+- **Caught a GLM error on ground truth:** GLM said to use 2-arg `math.atan(y,x)`
+  and NOT `math.atan2`. That's backwards for Lua 5.1 (WoW): 5.1 HAS `math.atan2`;
+  2-arg `math.atan` is 5.3+. Codex confirmed `math.atan2`. Shipped with an
+  atan2-preferring helper (2-arg atan fallback) so it's correct either way.
+  Also fixed GLM's one-shot drag (it only set the angle on OnDragStart) to a
+  proper OnUpdate-while-dragging loop.
+- **Shipped:** Modules/MinimapButton.lua — left-click options, right-click
+  lock/unlock, drag around ring, tooltip, position persists. No LibDBIcon.
 
 ### 2026-06-27 — v0.8.0: clean default layout + /wb resetpos
 - **Triangulation: rare strong agreement.** With 12 modules now, I flagged frame

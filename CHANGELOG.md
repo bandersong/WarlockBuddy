@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.0 — minimap button
+- **New module: MinimapButton** — a self-contained button on the minimap (no
+  LibDBIcon dependency). **Left-click** opens options, **right-click** locks/unlocks
+  frames, **drag** moves it around the minimap ring (position persists). Tooltip
+  explains all three. Discoverability for anyone who won't remember `/wb`.
+- Disable it from the options list (then `/reload`).
+
 ## 0.8.0 — clean default layout + reset positions
 - **Sane default layout.** The 12 frames now spread across the screen (left column
   shards/pet CDs/pet, right column soulstone/DoTs/summon, center alerts stacked,

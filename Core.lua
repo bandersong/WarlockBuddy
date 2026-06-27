@@ -50,6 +50,7 @@ ns.defaults = {
         Healthstone = true,
         LifeTap = true,
         Summon = true,
+        MinimapButton = true,
     },
     -- Default frame positions form a deliberately SPREAD, non-overlapping layout
     -- so a first-time user sees a clean screen, not a pile of boxes. `/wb resetpos`

@@ -36,6 +36,7 @@ Everything is a **draggable frame** and every module can be **toggled independen
 | `/wb unlock` | Show drag handles — move frames anywhere |
 | `/wb lock` | Lock frames in place |
 | `/wb resetpos` | Restore all frames to the default layout |
+| minimap button | Left-click: options · Right-click: lock/unlock · Drag: move |
 | `/wb reset` | Reset all settings (then `/reload`) |
 
 **Keybind the Healthstone button:** make a macro with the text
