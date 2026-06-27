@@ -160,6 +160,22 @@ If we ever want a mana-return prediction, first nail the rank base table against
 an authoritative TBC source (or in-game tooltip parse) — don't trust a single
 model's numbers.
 
+## 6f. Ritual of Summoning helper (verified)
+
+- Ritual of Summoning is **spellID 698**, costs **1 soul shard**, is cast on the
+  summonee, and needs **2 other** group members to click the resulting portal.
+- A secure button casts on a specific unit without changing your target via
+  `type="spell"`, `spell=<name>`, `unit="party2"` (both reviewers; Codex prefers
+  this over a `/cast [@party2] ...` macro, though `[@unit]` conditionals do work in
+  2.5). Same out-of-combat attribute rule as the Healthstone button — rebuild the
+  per-member buttons on `GROUP_ROSTER_UPDATE`, deferring to `PLAYER_REGEN_ENABLED`
+  if `InCombatLockdown()`.
+- **Announce:** `UNIT_SPELLCAST_SUCCEEDED` with `unit=="player"` and `spellID==698`
+  is the clean "my summon started" signal. It does **not** carry the target name,
+  so cache the name from the clicked button (PostClick) and announce that. Use the
+  global `SendChatMessage(msg, "PARTY"/"RAID")` — NOT `C_ChatInfo.SendChatMessage`
+  (that's the retail form; GLM suggested it, it's wrong for 2.5).
+
 ## 7. APIs we deliberately AVOID (retail/Wrath traps)
 
 - `C_UnitAuras.*` / `AuraUtil.*` — retail only, **do not exist** in 2.5.

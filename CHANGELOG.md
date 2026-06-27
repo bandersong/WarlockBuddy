@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.7.0 — Ritual of Summoning helper
+- **New module: Summon** — a clickable button per group member; click a name to
+  start summoning that person (without changing your current target), and it
+  auto-announces "Summoning X - click the portal!" to party/raid so the other two
+  click. Names are class-colored; shows "+N more" if the group is bigger than the
+  button row. Announce toggle in `/wb`.
+- Built on the proven secure-button pattern (type="spell" + unit attribute,
+  spellID 698); rebuilds out of combat only. Verified with GLM-5.2 + Codex
+  (docs/TBC_API_NOTES.md 6f).
+
 ## 0.6.0 — tunable thresholds (options sliders)
 - The options panel (`/wb`) now has a **Thresholds** column with sliders, so you
   can tune the numbers from the UI instead of editing saved vars:

@@ -7,9 +7,6 @@ here so the next run has continuity.
 ## Next pick (queued)
 
 Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run):
-- **Ritual of Summoning helper** (Codex's #1, GLM #3) — secure cast button + party
-  announce ("summoning X, click the portal"). Frequent dungeon friction; the
-  secure-button pattern is already proven by the Healthstone module.
 - **Drain channel helper** (Codex #2) — tick/clip timer for Drain Life/Drain Soul.
 - **Soulstone announce: match by spell id, not name** — codex (0.92) says use the
   rank ids {20707,20762,20763,20764,20765,27239} instead of the localized name in
@@ -23,6 +20,17 @@ Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run)
   mirroring the Healthstone module.
 
 ## Log
+
+### 2026-06-27 — v0.7.0: Ritual of Summoning helper
+- **Triangulation:** strong consensus. Both confirmed spellID 698, 1-shard cost,
+  the cast-on-summonee + 2-clickers mechanic, the out-of-combat secure-attribute
+  rule, and that the success event lacks the target name (cache it from the clicked
+  button). Codex preferred `type="spell"`+`unit` attribute over a `[@unit]` macro;
+  used that.
+- **Caught a GLM error:** GLM's announce code used `C_ChatInfo.SendChatMessage`
+  (retail). Used the global `SendChatMessage` instead (already proven in Soulstone).
+- **Shipped:** Modules/Summon.lua — per-member secure summon buttons, class-colored,
+  "+N more" overflow note (no silent cap), auto party/raid announce on success.
 
 ### 2026-06-27 — v0.6.0: options sliders for thresholds
 - **Q1 (next pick) — reviewers split:** GLM ranked options sliders #1 (leveling

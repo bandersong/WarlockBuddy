@@ -23,6 +23,8 @@ Built to cover every warlock spec — Affliction, Demonology, Destruction — ou
 | **PetCD** | Ready / cooldown bars for the current pet's utility abilities — **Spell Lock**, **Seduction**, **Devour Magic**, **Sacrifice**, **Intercept**, **Suffering**. |
 | **Execute** | Big **DRAIN SOUL** flash when the target drops to ~25% so you bank a soul shard on the kill. |
 | **Healthstone** | One-click **Healthstone panic button** that works in combat — click it or keybind it. Shows cooldown and dims when you're out. |
+| **LifeTap** | Safety cue — green **LIFE TAP** when mana's low and HP is safe, red **HP LOW** when tapping would drop you too far. |
+| **Summon** | **Ritual of Summoning** buttons (one per group member) + auto party announce so the other two click the portal. |
 
 Everything is a **draggable frame** and every module can be **toggled independently**.
 

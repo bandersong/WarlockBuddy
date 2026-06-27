@@ -89,6 +89,7 @@ function ns:BuildOptions()
         { "PetCD",     "Pet ability cooldowns (Spell Lock / Seduce)" },
         { "Healthstone", "One-click Healthstone panic button" },
         { "LifeTap",   "Life Tap safety cue (mana low / HP safe)" },
+        { "Summon",    "Ritual of Summoning buttons + announce" },
     }
     for _, m in ipairs(mods) do
         local key = m[1]

@@ -26,6 +26,9 @@ ns.spellID = {
     -- Channels / execute
     DrainSoul           = 1120,    -- shard-on-kill execute
 
+    -- Utility
+    RitualOfSummoning   = 698,     -- group summon (costs 1 soul shard)
+
     -- Crowd control / utility (timed)
     Banish              = 710,
     EnslaveDemon        = 1098,

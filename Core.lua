@@ -49,6 +49,7 @@ ns.defaults = {
         PetCD = true,
         Healthstone = true,
         LifeTap = true,
+        Summon = true,
     },
     shards = {
         warnLow = 3,           -- turn red at/below this
@@ -107,6 +108,11 @@ ns.defaults = {
         safeHpAbove = 0.40,    -- green only while health fraction is above this
         scale = 1.0,
         point = { "CENTER", 0, -150 },
+    },
+    summon = {
+        announce = true,       -- chat "Summoning X - click the portal!" on cast
+        scale = 1.0,
+        point = { "CENTER", 300, 120 },
     },
 }
 
