@@ -7,8 +7,11 @@ here so the next run has continuity.
 ## Next pick (queued)
 
 Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run):
-- **First-run "Beginner" preset** (Codex #3) — start with fewer modules on + plain
-  tooltips to cut overwhelm.
+- **1.0 visual polish** (both reviewers #3) — consistent fonts/sizes/tooltip
+  wording/spacing across the 13 frames so it reads "pro UI", not "cluttered".
+- **In-game test pass** — biggest remaining unknown: nothing has run in WoW yet.
+  When possible, load it on a real warlock and fix what actually breaks before
+  calling it 1.0.
 - **Drain channel helper** (Codex #2 earlier) — tick/clip timer for Drain Life/Soul.
 - **Soulstone announce: match by spell id, not name** — codex (0.92) says use the
   rank ids {20707,20762,20763,20764,20765,27239} instead of the localized name in
@@ -22,6 +25,18 @@ Candidates surfaced by reviewers, not yet built (pick + re-triangulate next run)
   mirroring the Healthstone module.
 
 ## Log
+
+### 2026-06-27 — v0.9.2: onboarding (welcome + /wb help)
+- **Triangulation:** strong consensus — both ranked the first-run welcome and
+  `/wb help` as the top two low-risk wins (Codex A then D, GLM D then A); both
+  said keep all features on, both deprioritized the Drain channel helper near 1.0.
+- GLM's Q2 "API traps" (C_Timer.After wrapping, debuff-limit, rank-in-names) don't
+  apply to this code: no C_Timer use (OnUpdate instead), aura `name` field is
+  already rank-less, icons are dynamic via GetSpellInfo. Codex's Q2 (saved-var
+  nil-safety) is already covered by the recursive applyDefaults deep-merge.
+- **Shipped:** one-time welcome (welcomed saved var) + ns:ShowHelp / `/wb help`.
+- **Stayed at 0.9.x, NOT 1.0:** the addon has never run in WoW. 1.0 should mean
+  in-game-verified, not just feature-complete. In-game test is the queued gate.
 
 ### 2026-06-27 — v0.9.1: secure/options hardening (re-audit #2)
 - Audited everything added since the v0.5.1 audit (sliders, Summon, MinimapButton,

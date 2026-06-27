@@ -33,6 +33,7 @@ Everything is a **draggable frame** and every module can be **toggled independen
 | Command | Action |
 | --- | --- |
 | `/wb` | Open the options panel |
+| `/wb help` | List all commands |
 | `/wb unlock` | Show drag handles — move frames anywhere |
 | `/wb lock` | Lock frames in place |
 | `/wb resetpos` | Restore all frames to the default layout |

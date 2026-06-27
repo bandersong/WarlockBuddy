@@ -35,6 +35,7 @@ end
 -- ---------------------------------------------------------------------------
 ns.defaults = {
     enabled = true,
+    welcomed = false,          -- one-time first-run welcome shown?
     locked = false,            -- when true, all movers are click-through
     minimap = { hide = false, angle = 200 },
     modules = {                -- per-module on/off
@@ -194,7 +195,31 @@ function ns:Init()
         end
     end
 
-    ns:Print("loaded. |cffcc99ff/wb|r options, |cffcc99ff/wb unlock|r to drag, |cffcc99ff/wb resetpos|r to restore layout.")
+    if not ns.db.welcomed then
+        ns:ShowWelcome()
+        ns.db.welcomed = true
+    else
+        ns:Print("loaded. |cffcc99ff/wb help|r for commands.")
+    end
+end
+
+-- First-launch greeting for a new user: explain the minimap button + how to move
+-- things. Shown once (then /wb help is the permanent reference).
+function ns:ShowWelcome()
+    ns:Print("|cff55ff55Welcome!|r All features are on and ready.")
+    ns:Print("The purple |cffcc99ffWB|r button on your minimap opens settings (or type |cffcc99ff/wb|r).")
+    ns:Print("Move frames: |cffcc99ff/wb unlock|r, drag them, then |cffcc99ff/wb lock|r.")
+    ns:Print("Stuck? |cffcc99ff/wb resetpos|r restores the layout. Full list: |cffcc99ff/wb help|r.")
+end
+
+-- Command reference (also the recovery path after the welcome scrolls away).
+function ns:ShowHelp()
+    ns:Print("commands:")
+    ns:Print("  |cffcc99ff/wb|r - open options")
+    ns:Print("  |cffcc99ff/wb unlock|r / |cffcc99fflock|r - move frames (drag while unlocked)")
+    ns:Print("  |cffcc99ff/wb resetpos|r - restore the default frame layout")
+    ns:Print("  |cffcc99ff/wb reset|r - reset ALL settings (then /reload)")
+    ns:Print("  minimap button: |cffffffffleft|r=options |cffffffffright|r=lock/unlock |cffffffffdrag|r=move")
 end
 
 -- ---------------------------------------------------------------------------
@@ -233,6 +258,8 @@ local function SlashCmdHandler(msg)
     elseif msg == "resetpos" then
         ns:ResetPositions()
         ns:Print("frame positions restored to the default layout.")
+    elseif msg == "help" then
+        ns:ShowHelp()
     elseif msg == "reset" then
         WarlockBuddyDB = {}
         ns:Print("settings reset. /reload to apply.")

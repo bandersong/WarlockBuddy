@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.2 — onboarding: welcome message + /wb help
+- **One-time welcome** on first login: explains the minimap button, `/wb`, how to
+  move frames, and `/wb resetpos` — so a new player isn't staring at a "weird icon"
+  wondering what to do. Shown once (tracked by `welcomed` saved var).
+- **`/wb help`** lists every command (the permanent reference after the welcome
+  scrolls away).
+- No features removed — everything stays enabled by default (as intended).
+
 ## 0.9.1 — secure/options hardening (re-audit)
 Bug-fix pass from a second full-source audit of the newer code (GLM-5.2 + Codex):
 - **Options checkboxes use their own label fontstring** instead of the template's
